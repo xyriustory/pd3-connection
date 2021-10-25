@@ -1,6 +1,6 @@
 function fetchGPMList(){
   $.get(
-    'http://digital-triplet.net:3030/akiyama', 
+    '//digital-triplet.net:3030/akiyama', 
     {query:`\
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>\
     PREFIX d3: <http://digital-triplet.net/>\
@@ -32,7 +32,7 @@ function addGPMList(data){
 function fetchActionList(){
   model = $("#selectModel").val();
   $.get(
-    'http://digital-triplet.net:3030/akiyama', 
+    '//digital-triplet.net:3030/akiyama', 
     {query:`\
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>\
     PREFIX d3: <http://digital-triplet.net/>\
@@ -68,7 +68,7 @@ function searchAction(actionName)
   actionName = $("#selectAction").val()
   model = $("#selectModel").val();
   $.get(
-    'http://digital-triplet.net:3030/akiyama', 
+    '//digital-triplet.net:3030/akiyama', 
     {query:`\
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>\
     PREFIX d3: <http://digital-triplet.net/>\
