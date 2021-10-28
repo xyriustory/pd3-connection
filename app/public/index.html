@@ -5,31 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet">
     <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/index.js" defer></script>
     <title>PD3Connection</title>
   </head>
   <body class="container">
-    <h1>ログレベルの記述検索システム</h1>
-    <div id="query" style="margin: 20px">
-      <form>
-        <select class="form-select" onchange="fetchActionList();" style="width:40%;float:left" id="selectModel">
-          <option selected disabled hidden>共通プロセスモデルを選択してください
-          </option>
-        </select>
-        <select class="form-select"  style="width:40%;float:left" id="selectAction">
-          <option selected disabled hidden>アクション名を選択してください
-          </option>
-        </select>
-        <!-- ボタンクリック時に上で定義した query() 関数を呼び出す -->
-        <button class="btn btn-secondary" type="button" onclick="searchAction()">検索</button>
-      </form>
+    <div>
+      <h1>ログレベルの記述検索システム</h1>
+      <div id="query" style="margin: 20px">
+        <form>
+          <select class="form-select" onchange="fetchActionList();" style="width:40%;float:left" id="selectModel">
+            <option selected disabled hidden>共通プロセスモデルを選択してください
+            </option>
+          </select>
+          <select class="form-select"  style="width:40%;float:left" id="selectAction">
+            <option selected disabled hidden>アクション名を選択してください
+            </option>
+          </select>
+          <!-- ボタンクリック時に上で定義した query() 関数を呼び出す -->
+          <button class="btn btn-secondary" type="button" onclick="searchAction()">検索</button>
+        </form>
+      </div>
     </div>
     <!-- 結果を表示するためのプレースホルダ -->
     <table class="table table-striped">
       <thead>
-        <th>記述タイトル</th>
-        <th>記述</th>
+        <th style>記述タイトル</th>
+        <th class="text-center" style="width: 10%;">記述</th>
+        <th class="text-center" style="width: 15%;">ダウンロード</th>
       </thead>
       <tbody>
       </tbody>

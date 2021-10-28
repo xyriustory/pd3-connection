@@ -1,16 +1,16 @@
 function fetchGPMList(){
   $.get(
     '//digital-triplet.net:3030/akiyama', 
-    {query:`\
-    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>\
-    PREFIX d3: <http://digital-triplet.net/>\
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-    select distinct ?gen\
-    where {\
-      graph ?gen {\
-        ?s ?p ?o;\
-      }\
-    }\
+    {query:`
+    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+    PREFIX d3: <http://digital-triplet.net/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    select distinct ?gen
+    where {
+      graph ?gen {
+        ?s ?p ?o;
+      }
+    }
     `},
     addGPMList,
     "json"
@@ -33,18 +33,18 @@ function fetchActionList(){
   model = $("#selectModel").val();
   $.get(
     '//digital-triplet.net:3030/akiyama', 
-    {query:`\
-    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>\
-    PREFIX d3: <http://digital-triplet.net/>\
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-    select ?actionName\
-    where {\
-      graph <` + model + `> {\
-        ?s a pd3:Action;\
-        pd3:value ?actionName\
+    {query:`
+    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+    PREFIX d3: <http://digital-triplet.net/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    select ?actionName
+    where {
+      graph <` + model + `> {
+        ?s a pd3:Action;
+        pd3:value ?actionName
         FILTER (?actionName != "Start" && ?actionName != "end" && ?actionName != "End")
-      }\
-    }\
+      }
+    }
     `},
     addActionList,
     "json"
@@ -69,24 +69,24 @@ function searchAction(actionName)
   model = $("#selectModel").val();
   $.get(
     '//digital-triplet.net:3030/akiyama', 
-    {query:`\
-    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>\
-    PREFIX d3: <http://digital-triplet.net/>\
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\
-    select distinct ?log\
-      where {\
-        GRAPH <`+ model +`>\
-        {\
-          ?s ?p ?o;\
-          rdfs:seeAlso ?log_action;\
-          pd3:value ?action_name.\
-          filter(?action_name = "`+actionName+`")\
-        }\
-        GRAPH ?log\
-        {\
-          ?log_action ?log_p ?log_o.\
-        }\
-      }\
+    {query:`
+    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+    PREFIX d3: <http://digital-triplet.net/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    select distinct ?log
+      where {
+        GRAPH <`+ model +`>
+        {
+          ?s ?p ?o;
+          rdfs:seeAlso ?log_action;
+          pd3:value ?action_name.
+          filter(?action_name = "`+actionName+`")
+        }
+        GRAPH ?log
+        {
+          ?log_action ?log_p ?log_o.
+        }
+      }
     `},
     success,
     "json"
@@ -120,8 +120,35 @@ function success(data) {
     $("tbody").append(
       $("<tr></tr>")
         .append($("<td></td>").text(logName))
-        .append($("<td></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(logName)).text("リンク")))
-    )
+        .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(logName)).append($("<i class='fas fa-project-diagram'></i>"))))
+        .append($("<td class='text-center'></td>").append($(`<a id="${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
+    );
+    $.ajax({
+      type: 'GET',
+      url: '//digital-triplet.net:3030/akiyama', 
+      data: {query:`
+      PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+      PREFIX d3: <http://digital-triplet.net/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      construct {?s ?p ?o}
+        where {
+          GRAPH <http://digital-triplet.net/`+ logName +`>
+          {
+            ?s ?p ?o
+          }
+        }
+      `},
+      success: function (data) {
+        const blob = new Blob([data], {type: 'text/turtle'});
+        const url = URL.createObjectURL(blob);
+        console.log(url)
+        document.getElementById(logName).download =  logName + '.ttl';
+        document.getElementById(logName).href = url;
+      },
+      async: false, 
+    });
+    
+
   })
 }
 
