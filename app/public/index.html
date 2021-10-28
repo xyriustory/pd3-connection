@@ -6,20 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/stylesheet.css">
     <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/index.js" defer></script>
     <title>PD3Connection</title>
   </head>
   <body class="container">
     <div>
-      <h1>ログレベルの記述検索システム</h1>
+      <h1 class="text-center">ログレベルの記述検索システム</h1>
       <div id="query" style="margin: 20px">
         <form>
-          <select class="form-select" onchange="fetchActionList();" style="width:40%;float:left" id="selectModel">
+          <select class="form-select" onchange="fetchActionList();" style="width:35%;float:left;margin:0 5px" id="selectModel">
             <option selected disabled hidden>共通プロセスモデルを選択してください
             </option>
           </select>
-          <select class="form-select"  style="width:40%;float:left" id="selectAction">
+          <select class="form-select"  style="width:50%;float:left;margin:0 5px" id="selectAction">
             <option selected disabled hidden>アクション名を選択してください
             </option>
           </select>
@@ -29,9 +30,10 @@
       </div>
     </div>
     <!-- 結果を表示するためのプレースホルダ -->
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
       <thead>
-        <th style>記述タイトル</th>
+        <th style="width: 20%">記述タイトル</th>
+        <th style="width: 40%">アクション名</th>
         <th class="text-center" style="width: 10%;">記述</th>
         <th class="text-center" style="width: 15%;">ダウンロード</th>
       </thead>
@@ -39,4 +41,7 @@
       </tbody>
     </table>
   </body>
+  <style>
+    a
+  </style>
 </html>

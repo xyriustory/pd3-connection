@@ -73,7 +73,7 @@ function searchAction(actionName)
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?log
+    select distinct ?log ?log_action_name
       where {
         GRAPH <`+ model +`>
         {
@@ -84,7 +84,8 @@ function searchAction(actionName)
         }
         GRAPH ?log
         {
-          ?log_action ?log_p ?log_o.
+          ?log_action ?log_p ?log_o;
+          pd3:value ?log_action_name
         }
       }
     `},
@@ -117,9 +118,11 @@ function success(data) {
   $('tbody *').remove();
   logArray.forEach(log => {
     logName = log["log"]["value"].replace('http://digital-triplet.net/','')
+    logActionName = log["log_action_name"]["value"]
     $("tbody").append(
       $("<tr></tr>")
         .append($("<td></td>").text(logName))
+        .append($("<td></td>").text(logActionName))
         .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(logName)).append($("<i class='fas fa-project-diagram'></i>"))))
         .append($("<td class='text-center'></td>").append($(`<a id="${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
     );
