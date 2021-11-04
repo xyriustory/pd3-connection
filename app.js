@@ -2,6 +2,7 @@ var express = require("express");
 const path = require('path');
 const exec  = require('child_process').exec;
 var app = express();
+var {PythonShell} = require('python-shell');
 
 app.set("view engine", "ejs");
 app.set('views', './views');
@@ -11,6 +12,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
   res.render('./index.ejs')
+})
+
+app.get('/tordf', (req, res) => {
+  xmlString = decodeURI(req.query.file);
+  let options = {
+    mode: 'text',
+    pythonOptions: ['-u'],
+    args:[xmlString]
+  };
+  PythonShell.run('xml_to_rdf_new.py', options, function (err, result) {
+    if (err) throw err;
+    res.format({
+      'text/turtle': function (){
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.send(result);
+      }
+    })
+  });
 })
 
 app.get('/action', (req, res) => {
