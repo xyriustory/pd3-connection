@@ -9,3 +9,11 @@ table {
   table-layout: fixed;
   width: 490px;
 }
+
+ul{
+  text-align: center !important;
+}
+
+li{
+  display: inline-block !important;
+}

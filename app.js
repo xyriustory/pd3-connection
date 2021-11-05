@@ -44,15 +44,6 @@ app.get('/search', (req, res) =>{
 
 app.all('/open', (req, res) => {
   res.render('./open.ejs')
-  // openApp = exec('open -a Autodesk\\ Fusion\\ 360', (err, stdout, stderr) => {
-  //     if (err) {
-  //       console.log(`stderr: ${stderr}`)
-  //       res.redirect('/index.html')
-  //       return
-  //     } 
-  //     console.log(`stdout: ${stdout}`)
-  //     res.redirect('/index.html')
-  //   })
 })
 
 app.get('/knowledge', (req, res) => {
