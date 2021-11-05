@@ -182,10 +182,11 @@ function searchAction(actionName)
     'http://localhost:3030/akiyama', 
     {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+    PREFIX pd3aki: <http://DigitalTriplet.net/2021/08/ontology/akiyama#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?log ?log_action_name
+    select distinct ?log ?log_action_name ?practitionerName ?knowledgeName
       where {
         GRAPH <`+ model +`>
         {
@@ -197,7 +198,9 @@ function searchAction(actionName)
         GRAPH ?log
         {
           ?log_action ?log_p ?log_o;
-          pd3:value ?log_action_name
+          pd3:value ?log_action_name.
+          OPTIONAL{?log_action pd3aki:practitioner ?practitionerName}.
+          OPTIONAL{?log_action pd3aki:knowledge ?knowledgeName}.
         }
       }
     `},
@@ -234,10 +237,14 @@ function success(data) {
   logArray.forEach(log => {
     logName = log["log"]["value"].replace('http://localhost:3030/akiyama/data/','')
     logActionName = log["log_action_name"]["value"]
+    practitionerName = '秋山'
+    knowledgeName = 'ToyotaWiki'
     $("tbody").append(
       $("<tr></tr>")
-        .append($("<td></td>").text(logName))
+      .append($("<td></td>").append($(`<a href='/action?name=${logName}'></a>`).text(logName)))
         .append($("<td></td>").text(logActionName))
+        .append($("<td></td>").append($(`<a href='/engineer'></a>`).text(practitionerName)))
+        .append($("<td></td>").append($(`<a href='/knowledge'></a>`).text(knowledgeName)))
         .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(logName)).append($("<i class='fas fa-project-diagram'></i>"))))
         .append($("<td class='text-center'></td>").append($(`<a id="${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
     );

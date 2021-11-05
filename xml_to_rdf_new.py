@@ -41,16 +41,15 @@ def xml_to_ttl(m):
 
 
   for diagram in root.iter('diagram'):
-    if(diagram[0][0][0].get('style')):
-      epstyle = diagram[0][0][0].get('style').split(';')
-      if('URI=' in epstyle[0]):
-        epuri = epstyle[0].replace('URI=','')
-        epURI = Namespace(epuri)
-      if('prefix=' in epstyle[1]):
-        prefix = epstyle[1].replace('prefix=','')
-      ep = URIRef(epuri)
-      data.bind(prefix, epURI)
-      data.add((ep, RDF.type, pd3.EP))
+    epstyle = diagram[0][0][0].get('style').split(';')
+    if('URI=' in epstyle[0]):
+      epuri = epstyle[0].replace('URI=','')
+      epURI = Namespace(epuri)
+    if('prefix=' in epstyle[1]):
+      prefix = epstyle[1].replace('prefix=','')
+    ep = URIRef(epuri)
+    data.bind(prefix, epURI)
+    data.add((ep, RDF.type, pd3.EP))
 
 
     for element in epstyle:
@@ -171,7 +170,7 @@ def xml_to_ttl(m):
 
           #member, target, source, contractionを取得
           for mxCell1 in diagram.iter('mxCell'):
-            if(mxCell1.get('parent') == id):
+            if(mxCell1.get('parent') and mxCell1.get('parent') == id):
               data.add((container, pd3.member, URIRef(epuri + mxCell1.get('id'))))
             elif(mxCell1.get('source') == id):
               target_id = mxCell1.get('target')

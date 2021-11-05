@@ -3,11 +3,12 @@ const path = require('path');
 const exec  = require('child_process').exec;
 var app = express();
 var {PythonShell} = require('python-shell');
+const  cors = require('cors');
 
 app.set("view engine", "ejs");
 app.set('views', './views');
 
-
+app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -25,8 +26,6 @@ app.get('/tordf', (req, res) => {
     if (err) throw err;
     res.format({
       'text/turtle': function (){
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.send(result);
       }
     })
