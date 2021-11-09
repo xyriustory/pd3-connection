@@ -10,7 +10,7 @@ function fetchPD3List(){
     where {
       graph ?g {
         ?s a pd3:EP;
-           dcterms:creator ?creator;
+        OPTIONAL{?s dcterms:creator ?creator}.
       }
     }
     `},
@@ -24,7 +24,7 @@ function addPD3List(data){
   $('tbody *').remove();
   PD3Array.forEach(PD3 => {
     PD3Name = PD3["g"]["value"].replace('http://localhost:3030/akiyama/data/','')
-    creatorName = PD3["creator"]["value"]
+    creatorName = "Reon Akiyama"
     $("tbody").append(
       $("<tr></tr>")
         .append($("<td></td>").append($(`<a href='/action?name=${PD3Name}'></a>`).text(PD3Name)))

@@ -15,6 +15,10 @@ app.get('/', (req, res) => {
   res.render('./index.ejs')
 })
 
+app.get('/client', (req, res) => {
+  res.render('./client.ejs')
+})
+
 app.get('/tordf', (req, res) => {
   xmlString = decodeURI(req.query.file);
   let options = {
