@@ -1,0 +1,655 @@
+@prefix d3: <http://digital-triplet.net/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix pd3: <http://DigitalTriplet.net/2021/08/ontology#> .
+@prefix pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+d3: a pd3:EP ;
+    pd3:memo """<mxfile host="localhost" modified="2021-11-12T11:49:03.590Z" agent="" etag="75fVO0VkPqGX7Mg5sY44" version="13.6.2" type="device">
+  <diagram id="LbmM_Q0KZugu_S7hD1Fk" name="log_level_description1">
+    <mxGraphModel dx="954" dy="574" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169">
+      <root>
+        <mxCell id="0" style="URI=http://digital-triplet.net/;prefix=d3;creator=Reon Akiyama;" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0KS1_44UhACvO5DW13Cu-1" value="治具仕様" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=block;fontSize=14;" parent="1" source="0KS1_44UhACvO5DW13Cu-2" edge="1">
+          <mxGeometry x="0.0714" y="20" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <mxPoint x="1630" y="70" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-2" value="位置決め基準の&lt;br&gt;仕様を決める" style="rounded=0;whiteSpace=wrap;html=1;pd3layer=topic;pd3type=action;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;seeAlso=[d3]ShZcpdwQBDAjhtpk27GP-2;" parent="1" vertex="1">
+          <mxGeometry x="850" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-3" value="製造用S/A精度図面" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=block;fontSize=14;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" target="0KS1_44UhACvO5DW13Cu-2" edge="1">
+          <mxGeometry x="-0.013" y="30" relative="1" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="80" y="70" as="sourcePoint" />
+            <mxPoint x="420" y="-60" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-4" value="位置決め基準の仕様を決める" style="swimlane;pd3layer=info;pd3type=container;containertype=specialization;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" parent="1" vertex="1">
+          <mxGeometry x="280" y="150" width="1100" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-5" value="End" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;pd3layer=info;pd3type=action;pd3action=end;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;" parent="0KS1_44UhACvO5DW13Cu-4" vertex="1">
+          <mxGeometry x="1000" y="60" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;fontSize=14;" parent="0KS1_44UhACvO5DW13Cu-4" source="0KS1_44UhACvO5DW13Cu-16" target="0KS1_44UhACvO5DW13Cu-5" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-7" value="部位、数値(0~-3, ±0.3など)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" parent="0KS1_44UhACvO5DW13Cu-6" vertex="1" connectable="0">
+          <mxGeometry y="-1" relative="1" as="geometry">
+            <mxPoint x="-20" y="-41" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-8" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;strokeColor=#d79b00;fillColor=#ffe6cc;" parent="0KS1_44UhACvO5DW13Cu-4" source="0KS1_44UhACvO5DW13Cu-9" target="0KS1_44UhACvO5DW13Cu-15" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-9" value="主基準を決める" style="rounded=0;whiteSpace=wrap;html=1;pd3layer=info;pd3type=action;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;seeAlso=[d3]ShZcpdwQBDAjhtpk27GP-9;" parent="0KS1_44UhACvO5DW13Cu-4" vertex="1">
+          <mxGeometry x="230" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;fontSize=14;" parent="0KS1_44UhACvO5DW13Cu-4" source="0KS1_44UhACvO5DW13Cu-12" target="0KS1_44UhACvO5DW13Cu-9" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-11" value="・単品C/F&lt;br&gt;・組付け治具" style="edgeLabel;html=1;align=left;verticalAlign=middle;resizable=0;points=[];fontSize=14;" parent="0KS1_44UhACvO5DW13Cu-10" vertex="1" connectable="0">
+          <mxGeometry y="3" relative="1" as="geometry">
+            <mxPoint x="-39.41" y="-47" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-12" value="Start" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;pd3layer=info;pd3type=action;pd3action=start;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;" parent="0KS1_44UhACvO5DW13Cu-4" vertex="1">
+          <mxGeometry x="30" y="60" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-13" value="個別公差指定？&lt;br&gt;S/A一覧表？" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="0KS1_44UhACvO5DW13Cu-4" target="0KS1_44UhACvO5DW13Cu-9" edge="1" source="BzjT5kFXzzSnv1A_8qEq-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="180" as="sourcePoint" />
+            <mxPoint x="297.5" y="130" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-14" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;strokeColor=#d79b00;fillColor=#ffe6cc;" parent="0KS1_44UhACvO5DW13Cu-4" source="0KS1_44UhACvO5DW13Cu-15" target="0KS1_44UhACvO5DW13Cu-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-15" value="副基準を決める" style="rounded=0;whiteSpace=wrap;html=1;pd3layer=info;pd3type=action;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;seeAlso=[d3]ShZcpdwQBDAjhtpk27GP-15;" parent="0KS1_44UhACvO5DW13Cu-4" vertex="1">
+          <mxGeometry x="500" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-16" value="各S/Aの品標に&lt;br&gt;公差を入力する" style="rounded=0;whiteSpace=wrap;html=1;pd3layer=info;pd3type=action;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;seeAlso=[d3]ShZcpdwQBDAjhtpk27GP-16;" parent="0KS1_44UhACvO5DW13Cu-4" vertex="1">
+          <mxGeometry x="740" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-17" value="&lt;span style=&quot;font-size: 14px&quot;&gt;公差事例集&lt;/span&gt;" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0.389;entryY=1.028;entryDx=0;entryDy=0;entryPerimeter=0;" parent="0KS1_44UhACvO5DW13Cu-4" target="0KS1_44UhACvO5DW13Cu-16" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="787" y="160" as="sourcePoint" />
+            <mxPoint x="369" y="120" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-18" value="組付け治具" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;" parent="0KS1_44UhACvO5DW13Cu-4" vertex="1" connectable="0">
+          <mxGeometry x="290.0017647058826" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-19" value="&lt;font style=&quot;font-size: 14px&quot;&gt;品標の帳票、記入例&lt;/font&gt;" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="0KS1_44UhACvO5DW13Cu-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="500" y="180" as="sourcePoint" />
+            <mxPoint x="500" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BzjT5kFXzzSnv1A_8qEq-2" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=topic;pd3type=arrow;fillColor=none;strokeColor=#d79b00;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;fontSize=14;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="0KS1_44UhACvO5DW13Cu-4" source="BzjT5kFXzzSnv1A_8qEq-1" target="0KS1_44UhACvO5DW13Cu-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="Tool" link="http://localhost:3000/open" id="BzjT5kFXzzSnv1A_8qEq-1">
+          <mxCell style="rounded=0;whiteSpace=wrap;html=1;pd3layer=topic;pd3type=tool;strokeColor=#d79b00;dashed=1;fontSize=14;fillColor=none;strokeWidth=1;" vertex="1" parent="0KS1_44UhACvO5DW13Cu-4">
+            <mxGeometry x="96" y="170" width="75" height="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="Knowledge" link="http://localhost:3000/knowledge" id="BzjT5kFXzzSnv1A_8qEq-3">
+          <mxCell style="rounded=0;whiteSpace=wrap;html=1;pd3layer=topic;pd3type=knowledge;strokeColor=#d79b00;dashed=1;fontSize=14;fillColor=none;strokeWidth=1;" vertex="1" parent="0KS1_44UhACvO5DW13Cu-4">
+            <mxGeometry x="240" y="170" width="75" height="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="BzjT5kFXzzSnv1A_8qEq-5" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=topic;pd3type=arrow;fillColor=none;strokeColor=#d79b00;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;fontSize=14;" edge="1" parent="0KS1_44UhACvO5DW13Cu-4" source="BzjT5kFXzzSnv1A_8qEq-4" target="0KS1_44UhACvO5DW13Cu-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <UserObject label="Engineer" link="http://localhost:3000/engineer" id="BzjT5kFXzzSnv1A_8qEq-4">
+          <mxCell style="rounded=0;whiteSpace=wrap;html=1;pd3layer=topic;pd3type=engineer;strokeColor=#d79b00;dashed=1;fontSize=14;fillColor=none;strokeWidth=1;" vertex="1" parent="0KS1_44UhACvO5DW13Cu-4">
+            <mxGeometry x="360" y="175" width="75" height="45" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0;entryY=1;entryDx=0;entryDy=0;endArrow=block;fontSize=14;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="0KS1_44UhACvO5DW13Cu-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1075" y="240" as="sourcePoint" />
+            <mxPoint x="850" y="100" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="935" y="150" />
+              <mxPoint x="935" y="120" />
+              <mxPoint x="850" y="120" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-21" value="主基準を決める" style="swimlane;pd3type=container;containertype=specializationpd3layer=topic;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="220" y="410" width="1530" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-22" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=block;" parent="0KS1_44UhACvO5DW13Cu-21" source="0KS1_44UhACvO5DW13Cu-24" target="0KS1_44UhACvO5DW13Cu-27" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-23" value="単品C/F仕様&lt;br&gt;組付け治具仕様" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="0KS1_44UhACvO5DW13Cu-22" vertex="1" connectable="0">
+          <mxGeometry x="-0.2923" relative="1" as="geometry">
+            <mxPoint x="23.33" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-24" value="Start" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;pd3layer=info;pd3type=action;pd3action=start;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="24" y="180" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-25" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=block;" parent="0KS1_44UhACvO5DW13Cu-21" source="0KS1_44UhACvO5DW13Cu-27" target="0KS1_44UhACvO5DW13Cu-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="544" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-26" value="主基準設定面" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="0KS1_44UhACvO5DW13Cu-25" vertex="1" connectable="0">
+          <mxGeometry x="-0.3278" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-27" value="主基準をとる面を決める" style="rounded=0;whiteSpace=wrap;html=1;pd3layer=info;pd3type=action;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;seeAlso=[d3]ShZcpdwQBDAjhtpk27GP-26;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="204" y="180" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-28" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=block;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="0KS1_44UhACvO5DW13Cu-21" source="0KS1_44UhACvO5DW13Cu-30" target="0KS1_44UhACvO5DW13Cu-35" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-29" value="丸ピンとダイヤピン位置" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="0KS1_44UhACvO5DW13Cu-28" vertex="1" connectable="0">
+          <mxGeometry x="-0.3892" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-30" value="主基準の丸ピンとダイヤピンの位置を決める" style="rounded=0;whiteSpace=wrap;html=1;pd3layer=info;pd3type=action;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;seeAlso=[d3]ShZcpdwQBDAjhtpk27GP-47;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="564" y="180" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-31" value="End" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;pd3layer=info;pd3type=action;pd3action=end;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="1440" y="180" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-32" value="①プレス成型上安定性のある面（プレスで変形しない面）に設定する&lt;br&gt;（絞り方向に直角の面が望ましい）&lt;br&gt;②精度を必要とする面を直接位置決めする&lt;br&gt;③打点する面を直接抑える（ばらつき、変形を防止するため）" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="0KS1_44UhACvO5DW13Cu-21" target="0KS1_44UhACvO5DW13Cu-27" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="264" y="350" as="sourcePoint" />
+            <mxPoint x="324" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-33" style="edgeStyle=none;rounded=0;orthogonalLoop=0;jettySize=auto;html=1;pd3layer=info;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;" parent="0KS1_44UhACvO5DW13Cu-21" source="0KS1_44UhACvO5DW13Cu-35" target="0KS1_44UhACvO5DW13Cu-31" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-34" value="受けの位置" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="0KS1_44UhACvO5DW13Cu-33" vertex="1" connectable="0">
+          <mxGeometry x="-0.25" y="6" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-35" value="主基準の受けの位置を決める" style="rounded=0;whiteSpace=wrap;html=1;pd3layer=info;pd3type=action;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontFamily=Helvetica;align=center;verticalAlign=middle;seeAlso=[d3]ShZcpdwQBDAjhtpk27GP-35;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="1044" y="180" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-36" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,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;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="74" y="250" width="140" height="28.21" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-37" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,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;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="354" y="223.5" width="163.83" height="33" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-38" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,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;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="830" y="156" width="165.48" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-39" value="参照①②④⑤&lt;br&gt;&lt;br&gt;①OK（図より）&lt;br&gt;②OK　120㎜/160㎜&lt;br&gt;④OK" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=1;entryY=0;entryDx=0;entryDy=0;" parent="0KS1_44UhACvO5DW13Cu-21" target="0KS1_44UhACvO5DW13Cu-30" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="840" y="60" as="sourcePoint" />
+            <mxPoint x="700" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-40" value="参照①&lt;br&gt;①OK（図より）" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=1;entryY=0;entryDx=0;entryDy=0;" parent="0KS1_44UhACvO5DW13Cu-21" target="0KS1_44UhACvO5DW13Cu-35" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1290" y="90" as="sourcePoint" />
+            <mxPoint x="1260" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-41" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;aspect=fixed;imageAspect=0;image=data:image/png,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;" parent="0KS1_44UhACvO5DW13Cu-21" vertex="1">
+          <mxGeometry x="1264" y="156" width="170" height="33.94" as="geometry" />
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-42" value="" style="html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=1;exitX=0.5;exitY=0;pd3type=arrow;pd3layer=topic;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" source="0KS1_44UhACvO5DW13Cu-21" target="0KS1_44UhACvO5DW13Cu-9" edge="1">
+          <mxGeometry as="geometry">
+            <mxPoint x="710" y="430" as="sourcePoint" />
+            <mxPoint x="230" y="120" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="990" y="390" />
+              <mxPoint x="510" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-43" value="①丸ピンとダイヤピンは互いに平行する面内に置く&lt;br&gt;②丸ピンとダイヤピンの間隔は、パネル大きさに対して十分大きくとる&lt;br&gt;（ワーク最大長の2/3以上、最低でも1/2以上、それ以下だとガタがでる）&lt;br&gt;③３本以上のピンを使う場合　剛性がある方向に　〇とダイヤ、&lt;br&gt;　ない方向のに〇〇&lt;br&gt;④制度の必要部位に近い穴を〇、後工程でS/Aの基準穴となるほうを〇&lt;br&gt;⑤特段の理由がない場合　標準ルール、車両の前、↑、右（外）を〇" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" target="0KS1_44UhACvO5DW13Cu-30" edge="1">
+          <mxGeometry x="-0.1111" y="-5" relative="1" as="geometry">
+            <mxPoint x="869" y="740" as="sourcePoint" />
+            <mxPoint x="859" y="660" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-44" value="①日必要最小限の数にする（剛体とみなせるなら3点、&lt;br&gt;そうでない場合、剛性にみあった1方向が確実に決まる最小限の数にする）" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" target="0KS1_44UhACvO5DW13Cu-35" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1349" y="730" as="sourcePoint" />
+            <mxPoint x="774" y="1000" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0KS1_44UhACvO5DW13Cu-45" value="参照①②③&lt;br&gt;&lt;br&gt;①　OK,&lt;br&gt;②　OK&lt;br&gt;③　OK" style="endArrow=block;endFill=1;html=1;align=left;verticalAlign=middle;pd3layer=topic;pd3type=arrow;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="620" y="470" as="sourcePoint" />
+            <mxPoint x="535" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>"""^^xsd:string ;
+    dcterms:creator "Reon Akiyama" .
+
+d3:0KS1_44UhACvO5DW13Cu-15 a pd3:Action ;
+    pd3:actionType "nil" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-4 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "120" ;
+    pd3:geoBoundingX "500" ;
+    pd3:geoBoundingY "60" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-15" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-8 ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-14 ;
+    pd3:value "副基準を決める" ;
+    rdfs:seeAlso d3:ShZcpdwQBDAjhtpk27GP-15 .
+
+d3:0KS1_44UhACvO5DW13Cu-2 a pd3:Action ;
+    pd3:actionType "nil" ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "120" ;
+    pd3:geoBoundingX "850" ;
+    pd3:geoBoundingY "40" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-2" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-3 ;
+    pd3:layer "topic" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-1 ;
+    pd3:value "位置決め基準の<br>仕様を決める" ;
+    rdfs:seeAlso d3:ShZcpdwQBDAjhtpk27GP-2 .
+
+d3:0KS1_44UhACvO5DW13Cu-3 a pd3:SupFlow ;
+    pd3:arcType "rationale" ;
+    pd3:entryX "0" ;
+    pd3:entryY "0.5" ;
+    pd3:geoSourcePointX "80" ;
+    pd3:geoSourcePointY "70" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-3" ;
+    pd3:layer "topic" ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-2 ;
+    pd3:value "製造用S/A精度図面" .
+
+d3:0KS1_44UhACvO5DW13Cu-42 a pd3:ContainerFlow ;
+    pd3:arcType "ContainerFlow" ;
+    pd3:entryX "0" ;
+    pd3:entryY "1" ;
+    pd3:exitX "0.5" ;
+    pd3:exitY "0" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-42" ;
+    pd3:layer "topic" ;
+    pd3:source d3:0KS1_44UhACvO5DW13Cu-21 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-9 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-43 a pd3:SupFlow ;
+    pd3:arcType "tool/knowledge" ;
+    pd3:entryX "0.5" ;
+    pd3:entryY "1" ;
+    pd3:geoSourcePointX "869" ;
+    pd3:geoSourcePointY "740" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-43" ;
+    pd3:layer "topic" ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-30 ;
+    pd3:value "①丸ピンとダイヤピンは互いに平行する面内に置く<br>②丸ピンとダイヤピンの間隔は、パネル大きさに対して十分大きくとる<br>（ワーク最大長の2/3以上、最低でも1/2以上、それ以下だとガタがでる）<br>③３本以上のピンを使う場合　剛性がある方向に　〇とダイヤ、<br>　ない方向のに〇〇<br>④制度の必要部位に近い穴を〇、後工程でS/Aの基準穴となるほうを〇<br>⑤特段の理由がない場合　標準ルール、車両の前、↑、右（外）を〇" .
+
+d3:0KS1_44UhACvO5DW13Cu-44 a pd3:SupFlow ;
+    pd3:arcType "tool/knowledge" ;
+    pd3:entryX "0.5" ;
+    pd3:entryY "1" ;
+    pd3:geoSourcePointX "1349" ;
+    pd3:geoSourcePointY "730" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-44" ;
+    pd3:layer "topic" ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-35 ;
+    pd3:value "①日必要最小限の数にする（剛体とみなせるなら3点、<br>そうでない場合、剛性にみあった1方向が確実に決まる最小限の数にする）" .
+
+d3:BzjT5kFXzzSnv1A_8qEq-1 a pd3aki:Tool ;
+    pd3:geoBoundingHeight "45" ;
+    pd3:geoBoundingWidth "75" ;
+    pd3:geoBoundingX "96" ;
+    pd3:geoBoundingY "170" ;
+    pd3:id "BzjT5kFXzzSnv1A_8qEq-1" ;
+    pd3:layer "topic" ;
+    pd3:value "Tool" ;
+    pd3aki:linkTo "http://localhost:3000/open" ;
+    pd3aki:use d3:0KS1_44UhACvO5DW13Cu-9 .
+
+d3:BzjT5kFXzzSnv1A_8qEq-3 a pd3aki:Knowledge ;
+    pd3:geoBoundingHeight "45" ;
+    pd3:geoBoundingWidth "75" ;
+    pd3:geoBoundingX "240" ;
+    pd3:geoBoundingY "170" ;
+    pd3:id "BzjT5kFXzzSnv1A_8qEq-3" ;
+    pd3:layer "topic" ;
+    pd3:value "Knowledge" ;
+    pd3aki:linkTo "http://localhost:3000/knowledge" ;
+    pd3aki:reference d3:0KS1_44UhACvO5DW13Cu-9 .
+
+d3:BzjT5kFXzzSnv1A_8qEq-4 a pd3aki:Engineer ;
+    pd3:geoBoundingHeight "45" ;
+    pd3:geoBoundingWidth "75" ;
+    pd3:geoBoundingX "360" ;
+    pd3:geoBoundingY "175" ;
+    pd3:id "BzjT5kFXzzSnv1A_8qEq-4" ;
+    pd3:layer "topic" ;
+    pd3:value "Engineer" ;
+    pd3aki:linkTo "http://localhost:3000/engineer" ;
+    pd3aki:practitioner d3:0KS1_44UhACvO5DW13Cu-9 .
+
+d3:0KS1_44UhACvO5DW13Cu-12 a pd3:Action ;
+    pd3:actionType "start" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-4 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "60" ;
+    pd3:geoBoundingX "30" ;
+    pd3:geoBoundingY "60" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-12" ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-10 ;
+    pd3:value "Start" .
+
+d3:0KS1_44UhACvO5DW13Cu-13 pd3:entryX "0.5" ;
+    pd3:entryY "1" ;
+    pd3:exitX "0.5" ;
+    pd3:exitY "0" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-13" ;
+    pd3:layer "info" ;
+    pd3:source d3:BzjT5kFXzzSnv1A_8qEq-3 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-9 ;
+    pd3:value "個別公差指定？<br>S/A一覧表？" .
+
+d3:0KS1_44UhACvO5DW13Cu-17 a pd3:SupFlow ;
+    pd3:entryX "0.389" ;
+    pd3:entryY "1.028" ;
+    pd3:geoSourcePointX "787" ;
+    pd3:geoSourcePointY "160" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-17" ;
+    pd3:layer "info" ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-16 ;
+    pd3:value "<span style=\'font-size: 14px\'>公差事例集</span>" .
+
+d3:0KS1_44UhACvO5DW13Cu-24 a pd3:Action ;
+    pd3:actionType "start" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-21 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "60" ;
+    pd3:geoBoundingX "24" ;
+    pd3:geoBoundingY "180" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-24" ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-22 ;
+    pd3:value "Start" .
+
+d3:0KS1_44UhACvO5DW13Cu-31 a pd3:Action ;
+    pd3:actionType "end" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-21 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "60" ;
+    pd3:geoBoundingX "1440" ;
+    pd3:geoBoundingY "180" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-31" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-33 ;
+    pd3:layer "info" ;
+    pd3:value "End" .
+
+d3:0KS1_44UhACvO5DW13Cu-32 a pd3:SupFlow ;
+    pd3:arcType "tool/knowledge" ;
+    pd3:entryX "0.5" ;
+    pd3:entryY "1" ;
+    pd3:geoSourcePointX "264" ;
+    pd3:geoSourcePointY "350" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-32" ;
+    pd3:layer "topic" ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-27 ;
+    pd3:value "①プレス成型上安定性のある面（プレスで変形しない面）に設定する<br>（絞り方向に直角の面が望ましい）<br>②精度を必要とする面を直接位置決めする<br>③打点する面を直接抑える（ばらつき、変形を防止するため）" .
+
+d3:0KS1_44UhACvO5DW13Cu-39 a pd3:SupFlow ;
+    pd3:arcType "annotation" ;
+    pd3:entryX "1" ;
+    pd3:entryY "0" ;
+    pd3:geoSourcePointX "840" ;
+    pd3:geoSourcePointY "60" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-39" ;
+    pd3:layer "topic" ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-30 ;
+    pd3:value "参照①②④⑤<br><br>①OK（図より）<br>②OK　120㎜/160㎜<br>④OK" .
+
+d3:0KS1_44UhACvO5DW13Cu-40 a pd3:SupFlow ;
+    pd3:arcType "annotation" ;
+    pd3:entryX "1" ;
+    pd3:entryY "0" ;
+    pd3:geoSourcePointX "1290" ;
+    pd3:geoSourcePointY "90" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-40" ;
+    pd3:layer "topic" ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-35 ;
+    pd3:value "参照①<br>①OK（図より）" .
+
+d3:0KS1_44UhACvO5DW13Cu-5 a pd3:Action ;
+    pd3:actionType "end" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-4 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "60" ;
+    pd3:geoBoundingX "1000" ;
+    pd3:geoBoundingY "60" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-5" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-6 ;
+    pd3:layer "info" ;
+    pd3:value "End" .
+
+d3:BzjT5kFXzzSnv1A_8qEq-2 pd3:entryX "0.5" ;
+    pd3:entryY "1" ;
+    pd3:exitX "0.5" ;
+    pd3:exitY "0" ;
+    pd3:id "BzjT5kFXzzSnv1A_8qEq-2" ;
+    pd3:layer "topic" ;
+    pd3:source d3:BzjT5kFXzzSnv1A_8qEq-1 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-9 ;
+    pd3:value "" .
+
+d3:BzjT5kFXzzSnv1A_8qEq-5 pd3:entryX "0.5" ;
+    pd3:entryY "1" ;
+    pd3:id "BzjT5kFXzzSnv1A_8qEq-5" ;
+    pd3:layer "topic" ;
+    pd3:source d3:BzjT5kFXzzSnv1A_8qEq-4 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-9 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-10 a pd3:Flow ;
+    pd3:arcType "Flow" ;
+    pd3:entryX "0" ;
+    pd3:entryY "0.5" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-10" ;
+    pd3:layer "info" ;
+    pd3:source d3:0KS1_44UhACvO5DW13Cu-12 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-9 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-16 a pd3:Action ;
+    pd3:actionType "nil" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-4 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "120" ;
+    pd3:geoBoundingX "740" ;
+    pd3:geoBoundingY "60" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-16" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-14,
+        d3:0KS1_44UhACvO5DW13Cu-17 ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-6 ;
+    pd3:value "各S/Aの品標に<br>公差を入力する" ;
+    rdfs:seeAlso d3:ShZcpdwQBDAjhtpk27GP-16 .
+
+d3:0KS1_44UhACvO5DW13Cu-22 a pd3:Flow ;
+    pd3:arcType "Flow" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-22" ;
+    pd3:layer "info" ;
+    pd3:source d3:0KS1_44UhACvO5DW13Cu-24 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-27 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-25 a pd3:Flow ;
+    pd3:arcType "Flow" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-25" ;
+    pd3:layer "info" ;
+    pd3:source d3:0KS1_44UhACvO5DW13Cu-27 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-30 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-28 a pd3:Flow ;
+    pd3:arcType "Flow" ;
+    pd3:entryX "0" ;
+    pd3:entryY "0.5" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-28" ;
+    pd3:layer "info" ;
+    pd3:source d3:0KS1_44UhACvO5DW13Cu-30 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-35 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-33 a pd3:Flow ;
+    pd3:arcType "Flow" ;
+    pd3:entryX "0" ;
+    pd3:entryY "0.5" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-33" ;
+    pd3:layer "info" ;
+    pd3:source d3:0KS1_44UhACvO5DW13Cu-35 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-31 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-6 a pd3:Flow ;
+    pd3:arcType "Flow" ;
+    pd3:entryX "0" ;
+    pd3:entryY "0.5" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-6" ;
+    pd3:layer "info" ;
+    pd3:source d3:0KS1_44UhACvO5DW13Cu-16 ;
+    pd3:target d3:0KS1_44UhACvO5DW13Cu-5 ;
+    pd3:value "" .
+
+d3:0KS1_44UhACvO5DW13Cu-27 a pd3:Action ;
+    pd3:actionType "nil" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-21 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "120" ;
+    pd3:geoBoundingX "204" ;
+    pd3:geoBoundingY "180" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-27" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-22,
+        d3:0KS1_44UhACvO5DW13Cu-32 ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-25 ;
+    pd3:value "主基準をとる面を決める" ;
+    rdfs:seeAlso d3:ShZcpdwQBDAjhtpk27GP-26 .
+
+d3:0KS1_44UhACvO5DW13Cu-30 a pd3:Action ;
+    pd3:actionType "nil" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-21 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "170" ;
+    pd3:geoBoundingX "564" ;
+    pd3:geoBoundingY "180" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-30" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-25,
+        d3:0KS1_44UhACvO5DW13Cu-39,
+        d3:0KS1_44UhACvO5DW13Cu-43 ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-28 ;
+    pd3:value "主基準の丸ピンとダイヤピンの位置を決める" ;
+    rdfs:seeAlso d3:ShZcpdwQBDAjhtpk27GP-47 .
+
+d3:0KS1_44UhACvO5DW13Cu-35 a pd3:Action ;
+    pd3:actionType "nil" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-21 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "170" ;
+    pd3:geoBoundingX "1044" ;
+    pd3:geoBoundingY "180" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-35" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-28,
+        d3:0KS1_44UhACvO5DW13Cu-40,
+        d3:0KS1_44UhACvO5DW13Cu-44 ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-33 ;
+    pd3:value "主基準の受けの位置を決める" ;
+    rdfs:seeAlso d3:ShZcpdwQBDAjhtpk27GP-35 .
+
+d3:0KS1_44UhACvO5DW13Cu-4 a pd3:Container ;
+    pd3:containerType "specialization" ;
+    pd3:geoBoundingHeight "220" ;
+    pd3:geoBoundingWidth "1100" ;
+    pd3:geoBoundingX "280" ;
+    pd3:geoBoundingY "150" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-4" ;
+    pd3:layer "info" ;
+    pd3:member d3:0KS1_44UhACvO5DW13Cu-10,
+        d3:0KS1_44UhACvO5DW13Cu-12,
+        d3:0KS1_44UhACvO5DW13Cu-13,
+        d3:0KS1_44UhACvO5DW13Cu-14,
+        d3:0KS1_44UhACvO5DW13Cu-15,
+        d3:0KS1_44UhACvO5DW13Cu-16,
+        d3:0KS1_44UhACvO5DW13Cu-17,
+        d3:0KS1_44UhACvO5DW13Cu-18,
+        d3:0KS1_44UhACvO5DW13Cu-19,
+        d3:0KS1_44UhACvO5DW13Cu-5,
+        d3:0KS1_44UhACvO5DW13Cu-6,
+        d3:0KS1_44UhACvO5DW13Cu-8,
+        d3:0KS1_44UhACvO5DW13Cu-9,
+        d3:BzjT5kFXzzSnv1A_8qEq-2,
+        d3:BzjT5kFXzzSnv1A_8qEq-5 ;
+    pd3:value "位置決め基準の仕様を決める" .
+
+d3:0KS1_44UhACvO5DW13Cu-21 a pd3:Container ;
+    pd3:contraction d3:0KS1_44UhACvO5DW13Cu-9 ;
+    pd3:geoBoundingHeight "380" ;
+    pd3:geoBoundingWidth "1530" ;
+    pd3:geoBoundingX "220" ;
+    pd3:geoBoundingY "410" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-21" ;
+    pd3:layer "containertype=specializationtopic" ;
+    pd3:member d3:0KS1_44UhACvO5DW13Cu-22,
+        d3:0KS1_44UhACvO5DW13Cu-24,
+        d3:0KS1_44UhACvO5DW13Cu-25,
+        d3:0KS1_44UhACvO5DW13Cu-27,
+        d3:0KS1_44UhACvO5DW13Cu-28,
+        d3:0KS1_44UhACvO5DW13Cu-30,
+        d3:0KS1_44UhACvO5DW13Cu-31,
+        d3:0KS1_44UhACvO5DW13Cu-32,
+        d3:0KS1_44UhACvO5DW13Cu-33,
+        d3:0KS1_44UhACvO5DW13Cu-35,
+        d3:0KS1_44UhACvO5DW13Cu-36,
+        d3:0KS1_44UhACvO5DW13Cu-37,
+        d3:0KS1_44UhACvO5DW13Cu-38,
+        d3:0KS1_44UhACvO5DW13Cu-39,
+        d3:0KS1_44UhACvO5DW13Cu-40,
+        d3:0KS1_44UhACvO5DW13Cu-41 ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-9 ;
+    pd3:value "主基準を決める" .
+
+d3:0KS1_44UhACvO5DW13Cu-9 a pd3:Action ;
+    pd3:actionType "nil" ;
+    pd3:attribution d3:0KS1_44UhACvO5DW13Cu-4 ;
+    pd3:expansion d3:0KS1_44UhACvO5DW13Cu-21 ;
+    pd3:geoBoundingHeight "60" ;
+    pd3:geoBoundingWidth "120" ;
+    pd3:geoBoundingX "230" ;
+    pd3:geoBoundingY "60" ;
+    pd3:id "0KS1_44UhACvO5DW13Cu-9" ;
+    pd3:input d3:0KS1_44UhACvO5DW13Cu-10,
+        d3:0KS1_44UhACvO5DW13Cu-13,
+        d3:0KS1_44UhACvO5DW13Cu-42,
+        d3:BzjT5kFXzzSnv1A_8qEq-2,
+        d3:BzjT5kFXzzSnv1A_8qEq-5 ;
+    pd3:layer "info" ;
+    pd3:output d3:0KS1_44UhACvO5DW13Cu-8 ;
+    pd3:value "主基準を決める" ;
+    rdfs:seeAlso d3:ShZcpdwQBDAjhtpk27GP-9 .

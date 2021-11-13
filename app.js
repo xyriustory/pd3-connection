@@ -1,9 +1,12 @@
 var express = require("express");
 const path = require('path');
-const exec  = require('child_process').exec;
 var app = express();
+var http = require('http').Server(app);
+const io = require('socket.io')(http);
 var {PythonShell} = require('python-shell');
 const  cors = require('cors');
+const port = process.env.PORT || 3000;
+
 
 app.set("view engine", "ejs");
 app.set('views', './views');
@@ -15,8 +18,8 @@ app.get('/', (req, res) => {
   res.render('./index.ejs')
 })
 
-app.get('/client', (req, res) => {
-  res.render('./client.ejs')
+app.get('/chat', (req, res) => {
+  res.render('./chat.ejs')
 })
 
 app.get('/tordf', (req, res) => {
@@ -41,7 +44,6 @@ app.get('/action', (req, res) => {
   res.render('./action.ejs', {pd3: pd3})
 })
 
-
 app.get('/search', (req, res) =>{
   res.render('./search.ejs')
 })
@@ -58,6 +60,23 @@ app.get('/engineer', (req, res) => {
   res.render('./engineer.ejs')
 })
 
-const port = process.env.PORT || 3000;
-app.listen(port)
-console.log("Listen on port: " + port);
+app.get('/hello', (req, res) => {
+  console.log('hello');
+  return 'hello'
+})
+
+io.on('connection', (socket) => {
+  socket.on('setUserName', function (userName) {
+    console.log(userName);
+    if(!userName) userName = '匿名';
+    socket.userName = userName;
+  });
+  socket.on('message',function(msg){
+    console.log('message: ' + msg);
+    io.emit('message', socket.userName + ': ' + msg);
+  });
+})
+
+http.listen(port, () => {
+  console.log('server listening. port:' + port);
+})

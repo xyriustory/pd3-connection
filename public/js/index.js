@@ -30,7 +30,8 @@ function addPD3List(data){
         .append($("<td></td>").append($(`<a href='/action?name=${PD3Name}'></a>`).text(PD3Name)))
         .append($("<td></td>").text(creatorName))
         .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(PD3Name)).append($("<i class='fas fa-project-diagram'></i>"))))
-        .append($("<td class='text-center'></td>").append($(`<a id="${PD3Name}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
+        .append($("<td class='text-center'></td>").append($(`<a id="RDF_${PD3Name}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
+        .append($("<td class='text-center'></td>").append($(`<a id="XML_${PD3Name}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
     );
     $.ajax({
       type: 'GET',
@@ -51,9 +52,33 @@ function addPD3List(data){
       success: function (data) {
         const blob = new Blob([data], {type: 'text/turtle'});
         const url = URL.createObjectURL(blob);
-        console.log(url)
-        document.getElementById(PD3Name).download =  PD3Name + '.ttl';
-        document.getElementById(PD3Name).href = url;
+        document.getElementById("RDF_"+PD3Name).download =  PD3Name + '.ttl';
+        document.getElementById("RDF_"+PD3Name).href = url;
+      },
+      async: false, 
+    });
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3030/akiyama', 
+      data: {query:`
+      PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+      PREFIX d3: <http://digital-triplet.net/>
+      PREFIX dcterms: <http://purl.org/dc/terms/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      select ?xml
+        where {
+          GRAPH <http://localhost:3030/akiyama/data/`+ PD3Name +`>
+          {
+            ?s pd3:memo ?xml
+          }
+        }
+      `},
+      success: function (data) {
+        xml = data["results"]["bindings"][0]["xml"]["value"]
+        const blob = new Blob([xml], {type: 'text/xml'});
+        const url = URL.createObjectURL(blob);
+        document.getElementById("XML_"+PD3Name).download =  PD3Name + '.xml';
+        document.getElementById("XML_"+PD3Name).href = url;
       },
       async: false, 
     });
@@ -62,7 +87,6 @@ function addPD3List(data){
 
 function fetchActionTable(modelname){
   model = modelname;
-  console.log(model)
   $.get(
     'http://localhost:3030/akiyama', 
     {query:`
@@ -119,6 +143,7 @@ function fetchGPMList(){
     where {
       graph ?gen {
         ?s ?p ?o;
+        pd3:epType "gpm".
       }
     }
     `},
@@ -182,29 +207,31 @@ function searchAction(actionName)
     'http://localhost:3030/akiyama', 
     {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
-    PREFIX pd3aki: <http://DigitalTriplet.net/2021/08/ontology/akiyama#>
+    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?log ?log_action_name ?practitionerName ?knowledgeName
+    select distinct ?log ?log_action_name ?practitioner ?knowledge
       where {
         GRAPH <`+ model +`>
         {
           ?s ?p ?o;
-          rdfs:seeAlso ?log_action;
           pd3:value ?action_name.
           filter(?action_name = "`+actionName+`")
         }
         GRAPH ?log
         {
+          ?log_ep pd3:epType "lld".
           ?log_action ?log_p ?log_o;
+          rdfs:seeAlso ?s;
           pd3:value ?log_action_name.
-          OPTIONAL{?log_action pd3aki:practitioner ?practitionerName}.
-          OPTIONAL{?log_action pd3aki:knowledge ?knowledgeName}.
+          OPTIONAL{?practitioner pd3aki:practitioner ?log_action
+          }.
+          OPTIONAL{?knowledge pd3aki:reference ?log_action}.
         }
       }
     `},
-    success,
+    addSearchedResult,
     "json"
   );
 }
@@ -217,17 +244,21 @@ function fetchLink(logName){
   switch (logName) {
     case "log-level-description1":
     case "log-level-description1-ver2":
+    case "211109_log_level_description1":
       return log1
       break
     case "log-level-description2":
     case "log-level-description2-ver2":
+    case "211109_log_level_description2":
       return log2
       break
     case "log-level-description3":
+    case "211109_log_level_description3":
     case "log-level-description3-ver2":
       return log3
       break
     case "generalized-process-model":
+    case "211109_generalized_process_model":
     case "generalized-process-model-ver2":
       return gpm;
       break;
@@ -236,14 +267,15 @@ function fetchLink(logName){
   }
 }
 
-function success(data) {
+function addSearchedResult(data) {
   logArray = data["results"]["bindings"]
   $('tbody *').remove();
   logArray.forEach(log => {
+    console.log(log)
     logName = log["log"]["value"].replace('http://localhost:3030/akiyama/data/','')
     logActionName = log["log_action_name"]["value"]
-    practitionerName = '秋山'
-    knowledgeName = 'ToyotaWiki'
+    practitioner = log["practitioner"]["value"] || '秋山'
+    knowledge = log["knowledge"]["value"] || 'ToyotaWiki'
     $("tbody").append(
       $("<tr></tr>")
       .append($("<td></td>").append($(`<a href='/action?name=${logName}'></a>`).text(logName)))
@@ -251,7 +283,8 @@ function success(data) {
         .append($("<td></td>").append($(`<a href='/engineer'></a>`).text(practitionerName)))
         .append($("<td></td>").append($(`<a href='/knowledge'></a>`).text(knowledgeName)))
         .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(logName)).append($("<i class='fas fa-project-diagram'></i>"))))
-        .append($("<td class='text-center'></td>").append($(`<a id="${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
+        .append($("<td class='text-center'></td>").append($(`<a id="RDF_${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
+        .append($("<td class='text-center'></td>").append($(`<a id="XML_${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
     );
     $.ajax({
       type: 'GET',
@@ -262,7 +295,7 @@ function success(data) {
       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
       construct {?s ?p ?o}
         where {
-          GRAPH <http://digital-triplet.net/`+ logName +`>
+          GRAPH <http://localhost:3030/akiyama/data/`+ logName +`>
           {
             ?s ?p ?o
           }
@@ -271,13 +304,61 @@ function success(data) {
       success: function (data) {
         const blob = new Blob([data], {type: 'text/turtle'});
         const url = URL.createObjectURL(blob);
-        console.log(url)
-        document.getElementById(logName).download =  logName + '.ttl';
-        document.getElementById(logName).href = url;
+        document.getElementById("RDF_"+logName).download =  logName + '.ttl';
+        document.getElementById("RDF_"+logName).href = url;
+      },
+      async: false, 
+    });
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3030/akiyama', 
+      data: {query:`
+      PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+      PREFIX d3: <http://digital-triplet.net/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      select ?xml
+        where {
+          GRAPH <http://localhost:3030/akiyama/data/`+ logName +`>
+          {
+            ?s pd3:memo ?xml .
+          }
+        }
+      `},
+      success: function (data) {
+        xml = data["results"]["bindings"][0]["xml"]["value"]
+        const blob = new Blob([xml], {type: 'text/xml'});
+        const url = URL.createObjectURL(blob);
+        document.getElementById("XML_"+logName).download =  logName + '.xml';
+        document.getElementById("XML_"+logName).href = url;
       },
       async: false, 
     });
     
 
   })
+}
+
+function addReferenceEvent(){
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3030/akiyama', 
+    data: {query:`
+    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+    PREFIX d3: <http://digital-triplet.net/>
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    INSERT DATA { 
+    GRAPH <http://localhost:3030/akiyama/data/reference-event>{
+      pd3aki:1 pd3aki:time "20211110" .
+      pd3aki:1 pd3aki:eventType 'knowledge-ref' .
+      pd3aki:1 pd3aki:referTo  d3:ShZcpdwQBDAjhtpk27GP-26.
+      }
+    };
+    `},
+    success: function(){
+      console.log('success')
+    },
+    async: false, 
+  });
 }

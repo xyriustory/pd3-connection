@@ -13,7 +13,7 @@ Original file is located at
 
 import xml.etree.ElementTree as ET
 from rdflib import Graph, URIRef, Literal, BNode, Namespace
-from rdflib.namespace import RDF, RDFS, DCTERMS
+from rdflib.namespace import RDF, RDFS, DCTERMS, XSD
 import argparse
 import re
 
@@ -31,8 +31,9 @@ def xml_to_ttl(m):
   #ttlデータの作成
   data = Graph()
 
+  pd3aki = Namespace('http://DigitalTriplet.net/2021/11/ontology/akiyama#')
   pd3 = Namespace('http://DigitalTriplet.net/2021/08/ontology#')
-
+  data.bind('pd3aki', pd3aki)
   data.bind('pd3', pd3)
   data.bind('rdf', RDF)
   data.bind('dcterms', DCTERMS)
@@ -65,6 +66,9 @@ def xml_to_ttl(m):
       elif('identifier=' in element):
         identifier = element.replace('identifier=', '')
         data.add((ep, DCTERMS.identifier, Literal(identifier)))
+      # elif('epType=' in element):
+      #   epType = element.replace('epType=', '')
+      #   data.add((ep, pd3.epType, Literal(epType)))
 
     #EPの文字情報を入手
     ret = ET.tostring(root, encoding = 'unicode')
@@ -72,12 +76,49 @@ def xml_to_ttl(m):
     for diagram in root1.findall('diagram'):
       if not epuri in diagram[0][0][0].get('style'):
         root1.remove(diagram)
-    # ret1 = ET.tostring(root1, encoding = 'unicode')
-    # data.add((ep, pd3.memo, Literal(ret1, datatype = XSD.string)))
+    ret1 = ET.tostring(root1, encoding = 'unicode')
+    data.add((ep, pd3.memo, Literal(ret1, datatype = XSD.string)))
 
     epURI_Num += 1  
 
     #エンティティの情報を入手
+    for Object in diagram.iter('UserObject'):        
+        mxCell = Object.find('mxCell')
+        style = mxCell.get('style')
+        obj = URIRef(epuri + Object.get('id'))
+        #idとvalueを取得
+        id = Object.get('id')
+        value = Object.get('label')
+        link = Object.get('link')
+
+        data.add((obj, pd3.id, Literal(id)))
+        data.add((obj, pd3.value, Literal(value)))
+        data.add((obj, pd3aki.linkTo, Literal(link)))
+
+        #座標、形状を取得
+        data.add((obj, pd3.geoBoundingWidth, Literal(mxCell[0].get('width'))))
+        data.add((obj, pd3.geoBoundingHeight, Literal(mxCell[0].get('height'))))
+        data.add((obj, pd3.geoBoundingX, Literal(mxCell[0].get('x'))))
+        data.add((obj, pd3.geoBoundingY, Literal(mxCell[0].get('y'))))
+
+        for element in style.split(';'):
+          if('pd3layer=' in element):
+            layer = Literal(element.replace('pd3layer=', ''))
+            data.add((obj, pd3.layer, layer))
+        for mxCell1 in diagram.iter('mxCell'):
+          if(mxCell1.get('source') == id):
+            target = mxCell1.get('target')
+            if('pd3type=knowledge' in style):
+                  data.add((obj, pd3aki.reference, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, pd3aki.Knowledge))
+            elif('pd3type=engineer' in style):
+                  data.add((obj, pd3aki.practitioner, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, pd3aki.Engineer))
+            elif('pd3type=tool' in style):
+                  data.add((obj, pd3aki.use, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, pd3aki.Tool))
+
+
     for mxCell in diagram.iter('mxCell'):
       style = mxCell.get('style')
       if(style != None):
@@ -170,7 +211,7 @@ def xml_to_ttl(m):
 
           #member, target, source, contractionを取得
           for mxCell1 in diagram.iter('mxCell'):
-            if(mxCell1.get('parent') and mxCell1.get('parent') == id):
+            if(mxCell1.get('parent') and mxCell1.get('parent') == id and mxCell1.get('id') ):
               data.add((container, pd3.member, URIRef(epuri + mxCell1.get('id'))))
             elif(mxCell1.get('source') == id):
               target_id = mxCell1.get('target')
@@ -291,37 +332,7 @@ def xml_to_ttl(m):
                   data.add((arc, pd3.geoSourcePointX, Literal(mxPoint.get('x'))))
                   data.add((arc, pd3.geoSourcePointY, Literal(mxPoint.get('y'))))
             
-        #object
-        elif('pd3type=object' in style):
-          object = URIRef(epuri + mxCell.get('id'))
-          #idとvalueを取得
-          id = mxCell.get('id')
-          value = mxCell.get('value')
-
-          data.add((object, RDF.type, pd3.Object))
-          data.add((object, pd3.id, Literal(id)))
-          data.add((object, pd3.value, Literal(value)))
-
-          #座標、形状を取得
-          data.add((object, pd3.geoBoundingWidth, Literal(mxCell[0].get('width'))))
-          data.add((object, pd3.geoBoundingHeight, Literal(mxCell[0].get('height'))))
-          data.add((object, pd3.geoBoundingX, Literal(mxCell[0].get('x'))))
-          data.add((object, pd3.geoBoundingY, Literal(mxCell[0].get('y'))))
-
-          for element in style.split(';'):
-            if('pd3layer=' in element):
-              layer = Literal(element.replace('pd3layer=', ''))
-              data.add((object, pd3.layer, layer))
-            if('pd3obejct=' in element):
-              obejct = Literal(element.replace('pd3obejct=', ''))
-              data.add((action, pd3.obejct, obejct))
-
-          attribution_id = mxCell.get('parent')
-
-          for mxCell1 in diagram.iter('mxCell'):
-            if((mxCell1.get('id') == attribution_id) & (mxCell1.get('style') != None)):
-              data.add((action, pd3.attribution, URIRef(epuri + attribution_id)))
-
+    
   # #print(data.serialize())
   # print(data)
   print(data.serialize())
