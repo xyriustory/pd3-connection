@@ -211,7 +211,7 @@ function searchAction(actionName)
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?log ?log_action_name ?practitioner ?knowledge
+    select distinct ?log ?log_action_name ?practitionerName ?knowledgeName
       where {
         GRAPH <`+ model +`>
         {
@@ -225,9 +225,10 @@ function searchAction(actionName)
           ?log_action ?log_p ?log_o;
           rdfs:seeAlso ?s;
           pd3:value ?log_action_name.
-          OPTIONAL{?practitioner pd3aki:practitioner ?log_action
-          }.
-          OPTIONAL{?knowledge pd3aki:reference ?log_action}.
+          OPTIONAL{?practitioner pd3aki:practitioner ?log_action;
+                                 pd3:value ?practitionerName}.
+          OPTIONAL{?knowledge pd3aki:reference ?log_action;
+                              pd3:value ?knowledgeName}.
         }
       }
     `},
@@ -271,11 +272,10 @@ function addSearchedResult(data) {
   logArray = data["results"]["bindings"]
   $('tbody *').remove();
   logArray.forEach(log => {
-    console.log(log)
     logName = log["log"]["value"].replace('http://localhost:3030/akiyama/data/','')
     logActionName = log["log_action_name"]["value"]
-    practitioner = log["practitioner"]["value"] || '秋山'
-    knowledge = log["knowledge"]["value"] || 'ToyotaWiki'
+    practitionerName =  log["practitionerName"] ? log["practitionerName"]["value"] : '秋山'
+    knowledgeName =  log["knowledgeName"] ? log["knowledgeName"]["value"] : 'ToyotaWiki'
     $("tbody").append(
       $("<tr></tr>")
       .append($("<td></td>").append($(`<a href='/action?name=${logName}'></a>`).text(logName)))
@@ -338,9 +338,11 @@ function addSearchedResult(data) {
   })
 }
 
-function addReferenceEvent(){
+function addEvent(eventType, uri){
+  /** 現在のDateオブジェクト作成 */
+  var d = new Date();
   $.ajax({
-    type: 'POST',
+    type: 'GET',
     url: 'http://localhost:3030/akiyama', 
     data: {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
@@ -348,11 +350,34 @@ function addReferenceEvent(){
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    INSERT DATA { 
-    GRAPH <http://localhost:3030/akiyama/data/reference-event>{
-      pd3aki:1 pd3aki:time "20211110" .
-      pd3aki:1 pd3aki:eventType 'knowledge-ref' .
-      pd3aki:1 pd3aki:referTo  d3:ShZcpdwQBDAjhtpk27GP-26.
+    select (COUNT(?s) as ?count)
+      where {
+        GRAPH <http://localhost:3030/akiyama/data/event>
+        {
+          ?s pd3aki:eventType "${eventType}" .
+        }
+      }
+    `},
+    success: function (data) {
+      count = data["results"]["bindings"][0]["count"]["value"]
+    },
+    async: false, 
+  });
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3030/akiyama', 
+    contentType: 'application/x-www-form-urlencoded',
+    data: {update:`
+    PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+    PREFIX d3: <http://digital-triplet.net/>
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    INSERT DATA {
+    GRAPH <http://localhost:3030/akiyama/data/event> {
+      pd3aki:${count} pd3aki:time "${d}" .
+      pd3aki:${count} pd3aki:eventType "${eventType}" .
+      pd3aki:${count} pd3aki:referTo  ${uri} .
       }
     };
     `},
