@@ -217,19 +217,17 @@ function searchAction(actionName)
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?log ?log_action_name ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
+    select ?log ?log_action_name ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink (COUNT(?event) as ?count)
       where {
         GRAPH <`+ model +`>
         {
-          ?s ?p ?o;
-          pd3:value ?action_name.
+          ?s pd3:value ?action_name.
           filter(?action_name = "`+actionName+`")
         }
         GRAPH ?log
         {
           ?log_ep pd3:epType "lld".
-          ?log_action ?log_p ?log_o;
-          rdfs:seeAlso ?s;
+          ?log_action rdfs:seeAlso ?s;
           pd3:value ?log_action_name.
           OPTIONAL{?practitioner pd3aki:practitioner ?log_action;
                                  pd3:value ?practitionerName;
@@ -238,7 +236,14 @@ function searchAction(actionName)
                               pd3:value ?knowledgeName;
                             pd3aki:linkTo ?knowledgeLink}.
         }
+        GRAPH <http://localhost:3030/akiyama/data/event>
+        {
+          OPTIONAL{?event pd3aki:eventType "reference";
+                        pd3aki:referTo ?knowledge}.
+        }
       }
+      group by ?log ?log_action_name ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink ?knowledge
+      order by DESC(?count)
     `},
     addSearchedResult,
     "json"
@@ -286,12 +291,13 @@ function addSearchedResult(data) {
     practitionerLink =  log["practitionerLink"] ? log["practitionerLink"]["value"] : '#'
     knowledgeName =  log["knowledgeName"] ? log["knowledgeName"]["value"] : 'ToyotaWiki'
     knowledgeLink =  log["knowledgeLink"] ? log["knowledgeLink"]["value"] : '#'
+    count = log["count"] ? log["count"]["value"] : '0'
     $("tbody").append(
       $("<tr></tr>")
       .append($("<td></td>").append($(`<a href='/action?name=${logName}'></a>`).text(logName)))
         .append($("<td></td>").text(logActionName))
         .append($("<td></td>").append($(`<a href='${practitionerLink}'></a>`).text(practitionerName)))
-        .append($("<td></td>").append($(`<a href='${knowledgeLink}'></a>`).text(knowledgeName)))
+        .append($("<td></td>").append($(`<a href='${knowledgeLink}'></a>`).text(knowledgeName+ '('+count+')')))
         .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(logName)).append($("<i class='fas fa-project-diagram'></i>"))))
         .append($("<td class='text-center'></td>").append($(`<a id="RDF_${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
         .append($("<td class='text-center'></td>").append($(`<a id="XML_${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
