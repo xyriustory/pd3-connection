@@ -91,18 +91,22 @@ function fetchActionTable(modelname){
     'http://localhost:3030/akiyama', 
     {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
-    PREFIX pd3aki: <http://DigitalTriplet.net/2021/08/ontology/akiyama#>
+    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select ?actionName ?layerName ?practitionerName ?knowledgeName
+    select ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
     where {
       graph <http://localhost:3030/akiyama/data/` + model + `> {
         ?s a pd3:Action;
         pd3:value ?actionName;
         pd3:layer ?layerName;
-        OPTIONAL{?s pd3aki:practitioner ?practitionerName}.
-        OPTIONAL{?s pd3aki:knowledge ?knowledgeName}.
+        OPTIONAL{?practitioner pd3aki:practitioner ?s;
+                  pd3:value ?practitionerName;
+                pd3aki:linkTo ?practitionerLink}.
+        OPTIONAL{?knowledge pd3aki:reference ?s;
+              pd3:value ?knowledgeName;
+            pd3aki:linkTo ?knowledgeLink}.
         FILTER (?actionName != "Start" && ?actionName != "end" && ?actionName != "End")
       }
     }
@@ -118,15 +122,17 @@ function addActionTable(data){
   actionList.forEach(action => {
     actionName = action["actionName"]["value"].replace('<br>','')
     layerName = action["layerName"]["value"]
-    practitionerName = '秋山'
-    knowledgeName = 'ToyotaWiki'
+    practitionerName =  action["practitionerName"] ? action["practitionerName"]["value"] : '秋山'
+    practitionerLink =  action["practitionerLink"] ? action["practitionerLink"]["value"] : '#'
+    knowledgeName =  action["knowledgeName"] ? action["knowledgeName"]["value"] : 'ToyotaWiki'
+    knowledgeLink =  action["knowledgeLink"] ? action["knowledgeLink"]["value"] : '#'
     /// option要素を動的に生成＆追加
     $("tbody").append(
       $("<tr></tr>")
         .append($("<td></td>").text(actionName))
         .append($("<td></td>").text(layerName))
-        .append($("<td></td>").append($(`<a href='/engineer'></a>`).text(practitionerName)))
-        .append($("<td></td>").append($(`<a href='/knowledge'></a>`).text(knowledgeName)))
+        .append($("<td></td>").append($(`<a href='${practitionerLink}'></a>`).text(practitionerName)))
+        .append($("<td></td>").append($(`<a href='${knowledgeLink}'></a>`).text(knowledgeName)))
     );
   });
 }
@@ -211,7 +217,7 @@ function searchAction(actionName)
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?log ?log_action_name ?practitionerName ?knowledgeName
+    select distinct ?log ?log_action_name ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
       where {
         GRAPH <`+ model +`>
         {
@@ -226,9 +232,11 @@ function searchAction(actionName)
           rdfs:seeAlso ?s;
           pd3:value ?log_action_name.
           OPTIONAL{?practitioner pd3aki:practitioner ?log_action;
-                                 pd3:value ?practitionerName}.
+                                 pd3:value ?practitionerName;
+                                pd3aki:linkTo ?practitionerLink}.
           OPTIONAL{?knowledge pd3aki:reference ?log_action;
-                              pd3:value ?knowledgeName}.
+                              pd3:value ?knowledgeName;
+                            pd3aki:linkTo ?knowledgeLink}.
         }
       }
     `},
@@ -275,13 +283,15 @@ function addSearchedResult(data) {
     logName = log["log"]["value"].replace('http://localhost:3030/akiyama/data/','')
     logActionName = log["log_action_name"]["value"]
     practitionerName =  log["practitionerName"] ? log["practitionerName"]["value"] : '秋山'
+    practitionerLink =  log["practitionerLink"] ? log["practitionerLink"]["value"] : '#'
     knowledgeName =  log["knowledgeName"] ? log["knowledgeName"]["value"] : 'ToyotaWiki'
+    knowledgeLink =  log["knowledgeLink"] ? log["knowledgeLink"]["value"] : '#'
     $("tbody").append(
       $("<tr></tr>")
       .append($("<td></td>").append($(`<a href='/action?name=${logName}'></a>`).text(logName)))
         .append($("<td></td>").text(logActionName))
-        .append($("<td></td>").append($(`<a href='/engineer'></a>`).text(practitionerName)))
-        .append($("<td></td>").append($(`<a href='/knowledge'></a>`).text(knowledgeName)))
+        .append($("<td></td>").append($(`<a href='${practitionerLink}'></a>`).text(practitionerName)))
+        .append($("<td></td>").append($(`<a href='${knowledgeLink}'></a>`).text(knowledgeName)))
         .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(logName)).append($("<i class='fas fa-project-diagram'></i>"))))
         .append($("<td class='text-center'></td>").append($(`<a id="RDF_${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
         .append($("<td class='text-center'></td>").append($(`<a id="XML_${logName}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
@@ -339,7 +349,6 @@ function addSearchedResult(data) {
 }
 
 function addEvent(eventType, uri){
-  /** 現在のDateオブジェクト作成 */
   var d = new Date();
   $.ajax({
     type: 'GET',

@@ -66,9 +66,9 @@ def xml_to_ttl(m):
       elif('identifier=' in element):
         identifier = element.replace('identifier=', '')
         data.add((ep, DCTERMS.identifier, Literal(identifier)))
-      # elif('epType=' in element):
-      #   epType = element.replace('epType=', '')
-      #   data.add((ep, pd3.epType, Literal(epType)))
+      elif('eptype=' in element):
+        epType = element.replace('eptype=', '')
+        data.add((ep, pd3.epType, Literal(epType)))
 
     #EPの文字情報を入手
     ret = ET.tostring(root, encoding = 'unicode')

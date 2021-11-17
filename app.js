@@ -52,8 +52,9 @@ app.all('/open', (req, res) => {
   res.render('./open.ejs')
 })
 
-app.get('/knowledge', (req, res) => {
-  res.render('./knowledge.ejs')
+app.get('/knowledge/:id', (req, res) => {
+  id = req.params["id"]
+  res.render('./knowledge'+id+'.ejs')
 })
 
 app.get('/engineer', (req, res) => {
