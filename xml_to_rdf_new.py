@@ -89,11 +89,15 @@ def xml_to_ttl(m):
         #idとvalueを取得
         id = Object.get('id')
         value = Object.get('label')
-        link = Object.get('link')
+        knowledgeURI = Object.get('knowledgeURI')
+        engineerURI = Object.get('engineerURI')
 
         data.add((obj, pd3.id, Literal(id)))
         data.add((obj, pd3.value, Literal(value)))
-        data.add((obj, pd3aki.linkTo, Literal(link)))
+        if knowledgeURI:
+          data.add((obj, pd3aki.knowledgeURI, URIRef(knowledgeURI)))
+        if engineerURI:
+          data.add((obj, pd3aki.engineerURI, URIRef(engineerURI)))
 
         #座標、形状を取得
         data.add((obj, pd3.geoBoundingWidth, Literal(mxCell[0].get('width'))))

@@ -95,7 +95,7 @@ function fetchActionTable(modelname){
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
+    select distinct ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
     where {
       graph <http://localhost:3030/akiyama/data/` + model + `> {
         ?s a pd3:Action;
@@ -103,13 +103,19 @@ function fetchActionTable(modelname){
         pd3:layer ?layerName;
         OPTIONAL{?practitioner pd3aki:practitioner ?s;
                   pd3:value ?practitionerName;
-                pd3aki:linkTo ?practitionerLink}.
+                  pd3aki:engineerURI ?engineerURI}.
         OPTIONAL{?knowledge pd3aki:reference ?s;
               pd3:value ?knowledgeName;
-            pd3aki:linkTo ?knowledgeLink}.
+              pd3aki:knowledgeURI ?knowledgeURI}.
         FILTER (?actionName != "Start" && ?actionName != "end" && ?actionName != "End")
       }
-    }
+      graph <http://localhost:3030/akiyama/data/engineer>{
+        OPTIONAL{?engineerURI pd3aki:linkTo ?practitionerLink.}
+      }
+      graph <http://localhost:3030/akiyama/data/knowledge>{
+        OPTIONAL{?knowledgeURI pd3aki:linkTo ?knowledgeLink.}
+      }
+    }group by ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
     `},
     addActionTable,
     "json"
@@ -231,15 +237,21 @@ function searchAction(actionName)
           pd3:value ?log_action_name.
           OPTIONAL{?practitioner pd3aki:practitioner ?log_action;
                                  pd3:value ?practitionerName;
-                                pd3aki:linkTo ?practitionerLink}.
+                                 pd3aki:engineerURI ?engineerURI}.
           OPTIONAL{?knowledge pd3aki:reference ?log_action;
                               pd3:value ?knowledgeName;
-                            pd3aki:linkTo ?knowledgeLink}.
+                              pd3aki:knowledgeURI ?knowledgeURI}.
+        }
+        graph <http://localhost:3030/akiyama/data/engineer>{
+          OPTIONAL{?engineerURI pd3aki:linkTo ?practitonerLink.}
+        }
+        graph <http://localhost:3030/akiyama/data/knowledge>{
+          OPTIONAL{?knowledgeURI pd3aki:linkTo ?knowledgeLink.}
         }
         GRAPH <http://localhost:3030/akiyama/data/event>
         {
           OPTIONAL{?event pd3aki:eventType "reference";
-                        pd3aki:referTo ?knowledge}.
+                        pd3aki:referTo ?knowledgeURI}.
         }
       }
       group by ?log ?log_action_name ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink ?knowledge
@@ -390,9 +402,9 @@ function addEvent(eventType, uri){
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     INSERT DATA {
     GRAPH <http://localhost:3030/akiyama/data/event> {
-      pd3aki:${count} pd3aki:time "${d}" .
-      pd3aki:${count} pd3aki:eventType "${eventType}" .
-      pd3aki:${count} pd3aki:referTo  ${uri} .
+      pd3aki:event${count} pd3aki:time "${d}" .
+      pd3aki:event${count} pd3aki:eventType "${eventType}" .
+      pd3aki:event${count} pd3aki:referTo  ${uri} .
       }
     };
     `},
