@@ -5,6 +5,7 @@ var http = require('http').Server(app);
 const io = require('socket.io')(http);
 var {PythonShell} = require('python-shell');
 const  cors = require('cors');
+const exec  = require('child_process').exec;
 const port = process.env.PORT || 3000;
 
 
@@ -50,6 +51,41 @@ app.get('/search', (req, res) =>{
 
 app.all('/open', (req, res) => {
   res.render('./open.ejs')
+})
+
+app.all('/open/:appName', (req, res) => {
+  var appName = req.params["appName"].replace(/_/g,'\ ')
+  console.log(appName)
+  // ex)
+  // Microsoft\ Excel
+  // Microsoft\ Word
+  openApp = exec(`open -a "${appName}"`, (err, stdout, stderr) => {
+    if (err) {
+      console.log(`stderr: ${stderr}`)
+      res.redirect('/')
+      return
+    } 
+    console.log(`stdout: ${stdout}`)
+    res.redirect('/')
+  })
+})
+
+app.all('/open/:appName/:filePath', (req, res) => {
+  var appName = req.params["appName"].replace(/_/g,'\ ')
+  var filePath = req.params["filePath"].replace(/_/g,'/')
+  console.log(appName)
+  // ex)
+  // Microsoft\ Excel
+  // Microsoft\ Word
+  openApp = exec(`open -a "${appName}" ${filePath}`, (err, stdout, stderr) => {
+    if (err) {
+      console.log(`stderr: ${stderr}`)
+      res.redirect('/')
+      return
+    } 
+    console.log(`stdout: ${stdout}`)
+    res.redirect('/')
+  })
 })
 
 app.get('/knowledge/:id', (req, res) => {
