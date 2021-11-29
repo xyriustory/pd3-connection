@@ -62,37 +62,31 @@ app.all('/open', (req, res) => {
 })
 
 app.all('/open/:appName', (req, res) => {
-  var appName = req.params["appName"].replace(/_/g,'\ ')
-  console.log(appName)
+  var appName = req.params["appName"].replace(/-/g,'\ ')
   // ex)
   // Microsoft\ Excel
   // Microsoft\ Word
   openApp = exec(`open -a "${appName}"`, (err, stdout, stderr) => {
     if (err) {
       console.log(`stderr: ${stderr}`)
-      res.redirect('/')
       return
     } 
     console.log(`stdout: ${stdout}`)
-    res.redirect('/')
   })
 })
 
 app.all('/open/:appName/:filePath', (req, res) => {
-  var appName = req.params["appName"].replace(/_/g,'\ ')
-  var filePath = req.params["filePath"].replace(/_/g,'/')
-  console.log(appName)
+  var appName = req.params["appName"].replace(/-/g,'\ ')
+  var filePath = req.params["filePath"].replace(/-/g,'/')
   // ex)
   // Microsoft\ Excel
   // Microsoft\ Word
   openApp = exec(`open -a "${appName}" ${filePath}`, (err, stdout, stderr) => {
     if (err) {
       console.log(`stderr: ${stderr}`)
-      res.redirect('/')
       return
     } 
     console.log(`stdout: ${stdout}`)
-    res.redirect('/')
   })
 })
 
