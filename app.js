@@ -19,6 +19,14 @@ app.get('/', (req, res) => {
   res.render('./index.ejs')
 })
 
+app.get('/top', (req, res) => {
+  res.render('./top.ejs')
+})
+
+app.get('/second', (req, res) => {
+  res.render('./second.ejs')
+})
+
 app.get('/chat', (req, res) => {
   res.render('./chat.ejs')
 })
@@ -30,7 +38,7 @@ app.get('/tordf', (req, res) => {
     pythonOptions: ['-u'],
     args:[xmlString]
   };
-  PythonShell.run('xml_to_rdf_new.py', options, function (err, result) {
+  PythonShell.run('xml_to_rdf.py', options, function (err, result) {
     if (err) throw err;
     res.format({
       'text/turtle': function (){
