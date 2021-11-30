@@ -95,16 +95,16 @@ function fetchActionTable(modelname){
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
+    select distinct ?actionURI ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
     where {
       graph <http://localhost:3030/akiyama/data/` + model + `> {
-        ?s a pd3:Action;
+        ?actionURI a pd3:Action;
         pd3:value ?actionName;
         pd3:layer ?layerName;
-        OPTIONAL{?practitioner pd3aki:practitioner ?s;
+        OPTIONAL{?practitioner pd3aki:practitioner ?actionURI;
                   pd3:value ?practitionerName;
                   pd3aki:engineerURI ?engineerURI}.
-        OPTIONAL{?knowledge pd3aki:reference ?s;
+        OPTIONAL{?knowledge pd3aki:reference ?actionURI;
               pd3:value ?knowledgeName;
               pd3aki:knowledgeURI ?knowledgeURI}.
         FILTER (?actionName != "Start" && ?actionName != "end" && ?actionName != "End")
@@ -115,7 +115,7 @@ function fetchActionTable(modelname){
       graph <http://localhost:3030/akiyama/data/knowledge>{
         OPTIONAL{?knowledgeURI pd3aki:linkTo ?knowledgeLink.}
       }
-    }group by ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
+    }group by ?actionURI ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
     `},
     addActionTable,
     "json"
@@ -126,6 +126,7 @@ function addActionTable(data){
   $('#selectAction *').remove();
   actionList = data["results"]["bindings"];
   actionList.forEach(action => {
+    actionURI = action["actionURI"]["value"].replace('http://digital-triplet.net/','d3:')
     actionName = action["actionName"]["value"].replace('<br>','')
     layerName = action["layerName"]["value"]
     practitionerName =  action["practitionerName"] ? action["practitionerName"]["value"] : '秋山'
@@ -138,7 +139,7 @@ function addActionTable(data){
         .append($("<td></td>").text(actionName))
         .append($("<td></td>").text(layerName))
         .append($("<td></td>").append($(`<a href='${practitionerLink}'></a>`).text(practitionerName)))
-        .append($("<td></td>").append($(`<a href='${knowledgeLink}'></a>`).text(knowledgeName)))
+        .append($("<td></td>").append($(`<a href='${knowledgeLink}?actionURI=${actionURI}'></a>`).text(knowledgeName)))
     );
   });
 }
@@ -251,7 +252,8 @@ function searchAction(actionName)
         GRAPH <http://localhost:3030/akiyama/data/event>
         {
           OPTIONAL{?event pd3aki:eventType "reference";
-                        pd3aki:referTo ?knowledgeURI}.
+                        pd3aki:referTo ?knowledgeURI;
+                      pd3aki:referedTo ?log_action}.
         }
       }
       group by ?log ?log_action_name ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink ?knowledge
@@ -366,7 +368,7 @@ function addSearchedResult(data) {
   })
 }
 
-function addEvent(eventType, uri){
+function addEvent(eventType, uri, actionURI){
   var d = new Date();
   $.ajax({
     type: 'GET',
@@ -402,9 +404,11 @@ function addEvent(eventType, uri){
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     INSERT DATA {
     GRAPH <http://localhost:3030/akiyama/data/event> {
-      pd3aki:event${count} pd3aki:time "${d}" .
-      pd3aki:event${count} pd3aki:eventType "${eventType}" .
-      pd3aki:event${count} pd3aki:referTo  ${uri} .
+      pd3aki:event${count} pd3aki:time "${d}" ;
+      pd3aki:eventType "${eventType}" ;
+      pd3aki:referTo  ${uri} ;
+      pd3aki:referedTo ${actionURI} .
+
       }
     };
     `},

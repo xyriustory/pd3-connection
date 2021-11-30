@@ -38,7 +38,7 @@ app.get('/tordf', (req, res) => {
     pythonOptions: ['-u'],
     args:[xmlString]
   };
-  PythonShell.run('xml_to_rdf.py', options, function (err, result) {
+  PythonShell.run('xml_to_rdf_new.py', options, function (err, result) {
     if (err) throw err;
     res.format({
       'text/turtle': function (){
@@ -92,7 +92,8 @@ app.all('/open/:appName/:filePath', (req, res) => {
 
 app.get('/knowledge/:id', (req, res) => {
   id = req.params["id"]
-  res.render('./knowledge'+id+'.ejs')
+  actionURI = req.query.actionURI
+  res.render('./knowledge'+id+'.ejs',{actionURI: actionURI})
 })
 
 app.get('/engineer', (req, res) => {
