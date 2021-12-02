@@ -91,29 +91,38 @@ function fetchActionTable(modelname){
     'http://localhost:3030/akiyama', 
     {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
-    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+    PREFIX d3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     select distinct ?actionURI ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
     where {
-      graph <http://localhost:3030/akiyama/data/` + model + `> {
+      {graph <http://localhost:3030/akiyama/data/` + model + `> {
         ?actionURI a pd3:Action;
         pd3:value ?actionName;
-        pd3:layer ?layerName;
-        OPTIONAL{?practitioner pd3aki:practitioner ?actionURI;
+        pd3:layer ?layerName.
+        ?practitioner d3aki:practitioner ?actionURI;
                   pd3:value ?practitionerName;
-                  pd3aki:engineerURI ?engineerURI}.
-        OPTIONAL{?knowledge pd3aki:reference ?actionURI;
+                  d3aki:engineerURI ?engineerURI.
+        ?knowledge d3aki:reference ?actionURI;
               pd3:value ?knowledgeName;
-              pd3aki:knowledgeURI ?knowledgeURI}.
+              d3aki:knowledgeURI ?knowledgeURI.
         FILTER (?actionName != "Start" && ?actionName != "end" && ?actionName != "End")
       }
       graph <http://localhost:3030/akiyama/data/engineer>{
-        OPTIONAL{?engineerURI pd3aki:linkTo ?practitionerLink.}
+        ?engineerURI d3aki:linkTo ?practitionerLink.
       }
       graph <http://localhost:3030/akiyama/data/knowledge>{
-        OPTIONAL{?knowledgeURI pd3aki:linkTo ?knowledgeLink.}
+        ?knowledgeURI d3aki:linkTo ?knowledgeLink.
+      }}
+      UNION
+      {
+        graph <http://localhost:3030/akiyama/data/` + model + `> {
+        ?actionURI a pd3:Action;
+        pd3:value ?actionName;
+        pd3:layer ?layerName.
+        FILTER (?actionName != "Start" && ?actionName != "end" && ?actionName != "End")
+      }
       }
     }group by ?actionURI ?actionName ?layerName ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink
     `},
@@ -220,7 +229,7 @@ function searchAction(actionName)
     'http://localhost:3030/akiyama', 
     {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
-    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+    PREFIX d3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -236,24 +245,24 @@ function searchAction(actionName)
           ?log_ep pd3:epType "lld".
           ?log_action rdfs:seeAlso ?s;
           pd3:value ?log_action_name.
-          OPTIONAL{?practitioner pd3aki:practitioner ?log_action;
+          OPTIONAL{?practitioner d3aki:practitioner ?log_action;
                                  pd3:value ?practitionerName;
-                                 pd3aki:engineerURI ?engineerURI}.
-          OPTIONAL{?knowledge pd3aki:reference ?log_action;
+                                 d3aki:engineerURI ?engineerURI}.
+          OPTIONAL{?knowledge d3aki:reference ?log_action;
                               pd3:value ?knowledgeName;
-                              pd3aki:knowledgeURI ?knowledgeURI}.
+                              d3aki:knowledgeURI ?knowledgeURI}.
         }
         graph <http://localhost:3030/akiyama/data/engineer>{
-          OPTIONAL{?engineerURI pd3aki:linkTo ?practitonerLink.}
+          OPTIONAL{?engineerURI d3aki:linkTo ?practitionerLink.}
         }
         graph <http://localhost:3030/akiyama/data/knowledge>{
-          OPTIONAL{?knowledgeURI pd3aki:linkTo ?knowledgeLink.}
+          OPTIONAL{?knowledgeURI d3aki:linkTo ?knowledgeLink.}
         }
         GRAPH <http://localhost:3030/akiyama/data/event>
         {
-          OPTIONAL{?event pd3aki:eventType "reference";
-                        pd3aki:referTo ?knowledgeURI;
-                      pd3aki:referedTo ?log_action}.
+          OPTIONAL{?event d3aki:eventType "reference";
+                        d3aki:referTo ?knowledgeURI;
+                      d3aki:referedTo ?log_action}.
         }
       }
       group by ?log ?log_action_name ?practitionerName ?practitionerLink ?knowledgeName ?knowledgeLink ?knowledge
@@ -368,14 +377,14 @@ function addSearchedResult(data) {
   })
 }
 
-function addEvent(eventType, uri, actionURI){
+function addEvent(eventType, uri, actionURI=null){
   var d = new Date();
   $.ajax({
     type: 'GET',
     url: 'http://localhost:3030/akiyama', 
     data: {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
-    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+    PREFIX d3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -383,7 +392,7 @@ function addEvent(eventType, uri, actionURI){
       where {
         GRAPH <http://localhost:3030/akiyama/data/event>
         {
-          ?s pd3aki:eventType "${eventType}" .
+          ?s d3aki:eventType "${eventType}" .
         }
       }
     `},
@@ -392,29 +401,100 @@ function addEvent(eventType, uri, actionURI){
     },
     async: false, 
   });
-  $.ajax({
-    type: 'POST',
-    url: 'http://localhost:3030/akiyama', 
-    contentType: 'application/x-www-form-urlencoded',
-    data: {update:`
+  if(actionURI){
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3030/akiyama', 
+      contentType: 'application/x-www-form-urlencoded',
+      data: {update:`
+      PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+      PREFIX d3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+      PREFIX d3: <http://digital-triplet.net/>
+      PREFIX dcterms: <http://purl.org/dc/terms/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT DATA {
+      GRAPH <http://localhost:3030/akiyama/data/event> {
+        d3aki:event${count} d3aki:time "${d}" ;
+        d3aki:eventType "${eventType}" ;
+        d3aki:referTo  ${uri} ;
+        d3aki:referedTo ${actionURI} .
+  
+        }
+      };
+      `},
+      success: function(){
+        console.log('success')
+      },
+      async: false, 
+    });
+  }else{
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3030/akiyama', 
+      contentType: 'application/x-www-form-urlencoded',
+      data: {update:`
+      PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
+      PREFIX d3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+      PREFIX d3: <http://digital-triplet.net/>
+      PREFIX dcterms: <http://purl.org/dc/terms/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      INSERT DATA {
+      GRAPH <http://localhost:3030/akiyama/data/event> {
+        d3aki:event${count} d3aki:time "${d}" ;
+        d3aki:eventType "${eventType}" ;
+        d3aki:referTo  ${uri}.
+  
+        }
+      };
+      `},
+      success: function(){
+        console.log('success')
+      },
+      async: false, 
+    });
+  }
+}
+
+function fetchKnowledgeTable(){
+  $.get(
+    'http://localhost:3030/akiyama', 
+    {query:`
     PREFIX pd3: <http://DigitalTriplet.net/2021/08/ontology#>
-    PREFIX pd3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
+    PREFIX d3aki: <http://DigitalTriplet.net/2021/11/ontology/akiyama#>
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    INSERT DATA {
-    GRAPH <http://localhost:3030/akiyama/data/event> {
-      pd3aki:event${count} pd3aki:time "${d}" ;
-      pd3aki:eventType "${eventType}" ;
-      pd3aki:referTo  ${uri} ;
-      pd3aki:referedTo ${actionURI} .
-
+    select distinct ?knowledgeTitle ?knowledgeLink (COUNT(?event) as ?count)
+    where {
+      graph <http://localhost:3030/akiyama/data/knowledge>{
+        ?knowledgeURI d3aki:title ?knowledgeTitle;
+        d3aki:linkTo ?knowledgeLink.
       }
-    };
+      graph <http://localhost:3030/akiyama/data/event>{
+        OPTIONAL{?event d3aki:eventType "reference";
+        d3aki:referTo ?knowledgeURI}.
+      }
+    }
+    group by ?knowledgeTitle ?knowledgeLink
+    order by DESC(?count)
     `},
-    success: function(){
-      console.log('success')
-    },
-    async: false, 
+    addKnowledgeTable,
+    "json"
+  );
+}
+
+function addKnowledgeTable(data){
+  $('#selectAction *').remove();
+  knowledgeList = data["results"]["bindings"];
+  knowledgeList.forEach(knowledge => {
+    knowledgeTitle = knowledge["knowledgeTitle"]["value"]
+    knowledgeLink =  knowledge["knowledgeLink"]["value"]
+    refCount = knowledge["count"]["value"]
+    /// option要素を動的に生成＆追加
+    $("tbody").append(
+      $("<tr></tr>")
+        .append($("<td></td>").append($(`<a href='${knowledgeLink}'></a>`).text(knowledgeTitle)))
+        .append($("<td></td>").text(refCount))
+    );
   });
 }

@@ -1,10 +1,11 @@
 var express = require("express");
 const path = require('path');
+const fs = require('fs')
 var app = express();
 var http = require('http').Server(app);
 const io = require('socket.io')(http);
 var {PythonShell} = require('python-shell');
-const  cors = require('cors');
+const cors = require('cors');
 const exec  = require('child_process').exec;
 const port = process.env.PORT || 3000;
 
@@ -12,7 +13,12 @@ const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.set('views', './views');
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080',
+  credentials: true,
+  optionsSuccessStatus: 200
+}));
+app.options('*',cors())
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
@@ -61,6 +67,13 @@ app.all('/open', (req, res) => {
   res.render('./open.ejs')
 })
 
+app.all('/openfile/:filepath', (req, res) => {
+  filepath = req.params["filepath"].replace(/-/g,'/')
+  var data = fs.readFileSync(`${__dirname}/${filepath}`);
+  res.contentType("application/pdf");
+  res.send(data);
+})
+
 app.all('/open/:appName', (req, res) => {
   var appName = req.params["appName"].replace(/-/g,'\ ')
   // ex)
@@ -90,14 +103,19 @@ app.all('/open/:appName/:filePath', (req, res) => {
   })
 })
 
+app.get('/knowledge', (req, res) => {
+  res.render('./knowledge.ejs')
+})
+
 app.get('/knowledge/:id', (req, res) => {
   id = req.params["id"]
   actionURI = req.query.actionURI
   res.render('./knowledge'+id+'.ejs',{actionURI: actionURI})
 })
 
-app.get('/engineer', (req, res) => {
-  res.render('./engineer.ejs')
+app.get('/engineer/:id', (req, res) => {
+  id = req.params["id"]
+  res.render('./engineer'+id+'.ejs')
 })
 
 app.get('/hello', (req, res) => {

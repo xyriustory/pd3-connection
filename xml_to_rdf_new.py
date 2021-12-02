@@ -31,9 +31,9 @@ def xml_to_ttl(m):
   #ttlデータの作成
   data = Graph()
 
-  pd3aki = Namespace('http://DigitalTriplet.net/2021/11/ontology/akiyama#')
+  d3aki = Namespace('http://DigitalTriplet.net/2021/11/ontology/akiyama#')
   pd3 = Namespace('http://DigitalTriplet.net/2021/08/ontology#')
-  data.bind('pd3aki', pd3aki)
+  data.bind('d3aki', d3aki)
   data.bind('pd3', pd3)
   data.bind('rdf', RDF)
   data.bind('dcterms', DCTERMS)
@@ -95,9 +95,9 @@ def xml_to_ttl(m):
         data.add((obj, pd3.id, Literal(id)))
         data.add((obj, pd3.value, Literal(value)))
         if knowledgeURI:
-          data.add((obj, pd3aki.knowledgeURI, URIRef(knowledgeURI)))
+          data.add((obj, d3aki.knowledgeURI, URIRef(knowledgeURI)))
         if engineerURI:
-          data.add((obj, pd3aki.engineerURI, URIRef(engineerURI)))
+          data.add((obj, d3aki.engineerURI, URIRef(engineerURI)))
 
         #座標、形状を取得
         data.add((obj, pd3.geoBoundingWidth, Literal(mxCell[0].get('width'))))
@@ -113,14 +113,14 @@ def xml_to_ttl(m):
           if(mxCell1.get('source') == id):
             target = mxCell1.get('target')
             if('pd3type=knowledge' in style):
-                  data.add((obj, pd3aki.reference, URIRef(epuri + target)))
-                  data.add((obj, RDF.type, pd3aki.Knowledge))
+                  data.add((obj, d3aki.reference, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, d3aki.Knowledge))
             elif('pd3type=engineer' in style):
-                  data.add((obj, pd3aki.practitioner, URIRef(epuri + target)))
-                  data.add((obj, RDF.type, pd3aki.Engineer))
+                  data.add((obj, d3aki.practitioner, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, d3aki.Engineer))
             elif('pd3type=tool' in style):
-                  data.add((obj, pd3aki.use, URIRef(epuri + target)))
-                  data.add((obj, RDF.type, pd3aki.Tool))
+                  data.add((obj, d3aki.use, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, d3aki.Tool))
 
 
     for mxCell in diagram.iter('mxCell'):
@@ -207,10 +207,11 @@ def xml_to_ttl(m):
                 data.add((action, RDFS.seeAlso, URIRef(epuri + seeEntity)))
               
           #valueを取得
-          if(containertype == 'whilebox' or containertype == 'whilecontainer'):
-            value = 'nil'
-          else:
-            value = mxCell.get('value')
+          # if(containertype == 'whilebox' or containertype == 'whilecontainer'):
+          #   value = 'nil'
+          # else:
+          #   value = mxCell.get('value')
+          value = mxCell.get('value')
           data.add((container, pd3.value, Literal(value)))
 
           #member, target, source, contractionを取得
