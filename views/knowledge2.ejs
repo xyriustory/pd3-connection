@@ -4,24 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/stylesheet.css">
   <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
   <script src="../js/index.js" defer></script>
-  <title>Knowledge</title>
+  <title>D3 Space</title>
 </head>
-<body onload="addEvent('reference', 'pd3aki:knowledge2', '<%= actionURI %>');">
+<body class="container text-center" onload="addEvent('reference', 'd3aki:knowledge2', '<%= actionURI %>');">
+  <header>
+      <nav id="gnav">
+          <ul class="inner">
+              <li><a href="/top">ホーム</a></li>
+              <li><a href="/search">検索</a></li>
+              <li><a href="/knowledge">知識一覧</a></li>
+              <li><a href="/engineer">エンジニア一覧</a></li>
+              <li><a href="http://localhost:8080/drawio/src/main/webapp/?sync=manual" target="_blank">記述作成</a></li>
+          </ul>
+      </nav>
+  </header>
   <h1>Toyota Wiki 2</h1>
-  <h2>STEP1: 基準穴の設定</h2>
-  <ol>
-    <li>基本的には2ヶ所設定</li>
-    <li>穴ピッチは可能な限り広く設定する</li>
-    <li>基本的な基準ピン形状は丸＊ダイヤとする</li>
-    <li>P工程としては基準穴は全て同一工程で穴抜きすること</li>
-  </ol>
-  <h2>STEP2: 主基準面の設定</h2>
+  <h2>主基準面の設定</h2>
   <ol>
     <li>必要最小限にし、バランスよく設定のこと</li>
+    <br>
+    <img src="../img/knowledge2-img1.png" alt="">
+    <br>
     <li>P成形上安定性のある面に設定する</li>
+    <br>
+    <img src="../img/knowledge2-img2.png" alt="">
+    <br>
     <li>従来からの実績でほとんど決まってきているが、車 (ボデー) として精度の必要とする部位 (面) を直接位置決め (基準設定) するのも、主基準設定の大切な方法のひとつである</li>
+    <br>
+    <img src="../img/knowledge2-img3.png" alt="">
   </ol>
 </body>
 <script>
