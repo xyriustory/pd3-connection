@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-  <html lang="ja"
+  <html lang="ja">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,11 +9,22 @@
     <link rel="stylesheet" href="css/stylesheet.css">
     <script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="js/index.js" defer></script>
-    <title>PD3Connection</title>
+    <title>D3 Space</title>
   </head>
   <body class="container text-center">
+    <header>
+        <nav id="gnav">
+            <ul class="inner">
+                <li><a href="/top">ホーム</a></li>
+                <li><a href="/search">検索</a></li>
+                <li><a href="/knowledge">知識一覧</a></li>
+                <li><a href="/engineer">エンジニア一覧</a></li>
+                <li><a href="http://localhost:8080/drawio/src/main/webapp/?sync=manual" target="_blank">記述作成</a></li>
+            </ul>
+        </nav>
+    </header>
     <div>
-      <h1 class="text-center border-bottom" style="margin: 0 10% 15px; padding: 5px 5px">PD3記述一覧</h1>
+      <h2 class="text-center border-bottom" style="margin: 0 10% 15px; padding: 5px 5px">PD3記述一覧</h1>
     </div>
     <nav class="border-bottom" style="text-align: left; margin: 0 10%;">
       <p>
@@ -55,13 +66,6 @@
       </tbody>
     </table>
     <br>
-    <div class="center-block">
-      <ul class="float list-unstyled mx-auto">
-        <li><a class="mx-2 btn btn-primary" href="/search">PD3検索システム</a></li>
-        <li><a class="mx-2 btn btn-secondary" href="http://localhost:8080/drawio/src/main/webapp/?sync=manual" target="_blank">PD3記述システム</a></li>
-        <li><a class="mx-2 btn btn-secondary" href="/open">起動</a></li>
-      </ul>
-    </div>
   </body>
   <script>
 

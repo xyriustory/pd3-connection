@@ -17,3 +17,30 @@ ul{
 li{
   display: inline-block !important;
 }
+
+/* ナビゲーションバー */
+#gnav {
+  margin: 0 auto 20px;
+  width: 80%;
+  height: 40px;
+  background-color: dimgray;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+.inner {
+  display: flex;
+}
+
+.inner > li {
+  list-style: none;
+}
+.inner > li > a {
+  display: block;
+  text-decoration: none;
+  color: white;
+  margin-right: 35px;
+}
+
+.inner > li > a:hover {
+  color: rgb(200, 200, 200) ;
+}
