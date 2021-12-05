@@ -6,10 +6,11 @@ function fetchPD3List(){
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select distinct ?g ?creator
+    select distinct ?g ?eptype ?creator
     where {
       graph ?g {
         ?s a pd3:EP;
+        pd3:epType ?eptype.
         OPTIONAL{?s dcterms:creator ?creator}.
       }
     }
@@ -24,10 +25,12 @@ function addPD3List(data){
   $('tbody *').remove();
   PD3Array.forEach(PD3 => {
     PD3Name = PD3["g"]["value"].replace('http://localhost:3030/akiyama/data/','')
-    creatorName = "Reon Akiyama"
+    eptype = PD3["eptype"]["value"]
+    creatorName = "秋山"
     $("tbody").append(
       $("<tr></tr>")
         .append($("<td></td>").append($(`<a href='/action?name=${PD3Name}'></a>`).text(PD3Name)))
+        .append($("<td></td>").text(eptype))
         .append($("<td></td>").text(creatorName))
         .append($("<td class='text-center'></td>").append($("<a target='_blank'></a>").prop('href', fetchLink(PD3Name)).append($("<i class='fas fa-project-diagram'></i>"))))
         .append($("<td class='text-center'></td>").append($(`<a id="RDF_${PD3Name}"></a>`).append($("<i class='fas fa-file-download'></i>"))))
