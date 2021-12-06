@@ -10,11 +10,12 @@ table {
   width: 490px;
 }
 
-ul{
+nav > ul{
   text-align: center !important;
 }
 
-li{
+
+nav > ul > li{
   display: inline-block !important;
 }
 
