@@ -89,13 +89,13 @@ def xml_to_ttl(m):
         #idとvalueを取得
         id = Object.get('id')
         value = Object.get('label')
-        knowledgeURI = Object.get('knowledgeURI')
+        documentURI = Object.get('documentURI')
         engineerURI = Object.get('engineerURI')
 
         data.add((obj, pd3.id, Literal(id)))
         data.add((obj, pd3.value, Literal(value)))
-        if knowledgeURI:
-          data.add((obj, d3aki.knowledgeURI, URIRef(knowledgeURI)))
+        if documentURI:
+          data.add((obj, d3aki.documentURI, URIRef(documentURI)))
         if engineerURI:
           data.add((obj, d3aki.engineerURI, URIRef(engineerURI)))
 
@@ -112,9 +112,49 @@ def xml_to_ttl(m):
         for mxCell1 in diagram.iter('mxCell'):
           if(mxCell1.get('source') == id):
             target = mxCell1.get('target')
-            if('pd3type=knowledge' in style):
+            if('pd3type=document' in style):
                   data.add((obj, d3aki.reference, URIRef(epuri + target)))
-                  data.add((obj, RDF.type, d3aki.Knowledge))
+                  data.add((obj, RDF.type, d3aki.document))
+            elif('pd3type=engineer' in style):
+                  data.add((obj, d3aki.practitioner, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, d3aki.Engineer))
+            elif('pd3type=tool' in style):
+                  data.add((obj, d3aki.use, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, d3aki.Tool))
+
+    for Object in diagram.iter('object'):        
+        mxCell = Object.find('mxCell')
+        style = mxCell.get('style')
+        obj = URIRef(epuri + Object.get('id'))
+        #idとvalueを取得
+        id = Object.get('id')
+        value = Object.get('label')
+        documentURI = Object.get('documentURI')
+        engineerURI = Object.get('engineerURI')
+
+        data.add((obj, pd3.id, Literal(id)))
+        data.add((obj, pd3.value, Literal(value)))
+        if documentURI:
+          data.add((obj, d3aki.documentURI, URIRef(documentURI)))
+        if engineerURI:
+          data.add((obj, d3aki.engineerURI, URIRef(engineerURI)))
+
+        #座標、形状を取得
+        data.add((obj, pd3.geoBoundingWidth, Literal(mxCell[0].get('width'))))
+        data.add((obj, pd3.geoBoundingHeight, Literal(mxCell[0].get('height'))))
+        data.add((obj, pd3.geoBoundingX, Literal(mxCell[0].get('x'))))
+        data.add((obj, pd3.geoBoundingY, Literal(mxCell[0].get('y'))))
+
+        for element in style.split(';'):
+          if('pd3layer=' in element):
+            layer = Literal(element.replace('pd3layer=', ''))
+            data.add((obj, pd3.layer, layer))
+        for mxCell1 in diagram.iter('mxCell'):
+          if(mxCell1.get('source') == id):
+            target = mxCell1.get('target')
+            if('pd3type=document' in style):
+                  data.add((obj, d3aki.reference, URIRef(epuri + target)))
+                  data.add((obj, RDF.type, d3aki.document))
             elif('pd3type=engineer' in style):
                   data.add((obj, d3aki.practitioner, URIRef(epuri + target)))
                   data.add((obj, RDF.type, d3aki.Engineer))
@@ -153,9 +193,9 @@ def xml_to_ttl(m):
               data.add((action, pd3.actionType, actionType))
               pd3actioncheck = False
             elif('seeAlso=' in element):
-              seeEntities = element.replace('seeAlso=', '').replace('['+prefix+']', '').split(',')
+              seeEntities = re.sub(r'\[.+\]','',element.replace('seeAlso=', '')).split(',')
               for seeEntity in seeEntities:
-                  data.add((action, RDFS.seeAlso, URIRef(epuri + seeEntity)))
+                  data.add((action, RDFS.seeAlso, URIRef(seeEntity)))
           if(pd3actioncheck):
             data.add((action,pd3.actionType, Literal('nil')))
           pd3actioncheck = True
@@ -202,9 +242,9 @@ def xml_to_ttl(m):
               containertype = element.replace('containertype=', '')
               data.add((container, pd3.containerType, Literal(containertype)))
             elif('seeAlso=' in element):
-              seeEntities = element.replace('seeAlso=', '').replace('['+prefix+']', '').split(',')
+              seeEntities = re.sub(r'\[.+\]','',element.replace('seeAlso=', '')).split(',')
               for seeEntity in seeEntities:
-                data.add((action, RDFS.seeAlso, URIRef(epuri + seeEntity)))
+                data.add((action, RDFS.seeAlso, URIRef(seeEntity)))
               
           #valueを取得
           # if(containertype == 'whilebox' or containertype == 'whilecontainer'):
@@ -281,9 +321,9 @@ def xml_to_ttl(m):
                   entryY = element.replace('entryY=', '')
                   data.add((arc, pd3.entryY, Literal(entryY)))
                 elif('seeAlso=' in element):
-                  seeEntities = element.replace('seeAlso=', '').replace('['+prefix+']', '').split(',')
+                  seeEntities = re.sub(r'\[.+\]','',element.replace('seeAlso=', '')).split(',')
                   for seeEntity in seeEntities:
-                      data.add((action, RDFS.seeAlso, URIRef(epuri + seeEntity)))
+                      data.add((action, RDFS.seeAlso, URIRef(seeEntity)))
                     
               for mxCell1 in diagram.iter('mxCell'):
                 if(mxCell1.get('id') == source):
@@ -316,9 +356,9 @@ def xml_to_ttl(m):
                   entryY = element.replace('entryY=', '')
                   data.add((arc, pd3.entryY, Literal(entryY)))
                 elif('seeAlso=' in element):
-                  seeEntities = element.replace('seeAlso=', '').replace('['+prefix+']', '').split(',')
+                  seeEntities = re.sub(r'\[.+\]','',element.replace('seeAlso=', '')).split(',')
                   for seeEntity in seeEntities:
-                      data.add((action, RDFS.seeAlso, URIRef(epuri + seeEntity)))
+                      data.add((action, RDFS.seeAlso, URIRef(seeEntity)))
                       
               #arcTypeの取得
               if("entryY=1;" in style):

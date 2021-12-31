@@ -67,6 +67,10 @@ app.all('/open', (req, res) => {
   res.render('./open.ejs')
 })
 
+app.all('/open2', (req, res) => {
+  res.render('./open2.ejs')
+})
+
 app.all('/openfile/:filepath', (req, res) => {
   filepath = req.params["filepath"].replace(/-/g,'/')
   var data = fs.readFileSync(`${__dirname}/${filepath}`);
@@ -103,36 +107,19 @@ app.all('/open/:appName/:filePath', (req, res) => {
   })
 })
 
-app.get('/knowledge', (req, res) => {
-  res.render('./knowledge.ejs')
+app.get('/document', (req, res) => {
+  res.render('./document.ejs')
 })
 
-app.get('/knowledge/:id', (req, res) => {
+app.get('/document/:id', (req, res) => {
   id = req.params["id"]
   actionURI = req.query.actionURI
-  res.render('./knowledge'+id+'.ejs',{actionURI: actionURI})
+  res.render('./document'+id+'.ejs',{actionURI: actionURI})
 })
 
 app.get('/engineer/:id', (req, res) => {
   id = req.params["id"]
   res.render('./engineer'+id+'.ejs')
-})
-
-app.get('/hello', (req, res) => {
-  console.log('hello');
-  return 'hello'
-})
-
-io.on('connection', (socket) => {
-  socket.on('setUserName', function (userName) {
-    console.log(userName);
-    if(!userName) userName = '匿名';
-    socket.userName = userName;
-  });
-  socket.on('message',function(msg){
-    console.log('message: ' + msg);
-    io.emit('message', socket.userName + ': ' + msg);
-  });
 })
 
 http.listen(port, () => {
