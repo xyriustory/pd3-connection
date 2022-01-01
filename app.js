@@ -70,6 +70,12 @@ app.all('/open', (req, res) => {
 app.all('/open2', (req, res) => {
   res.render('./open2.ejs')
 })
+app.all('/open3', (req, res) => {
+  res.render('./open3.ejs')
+})
+app.all('/open4', (req, res) => {
+  res.render('./open4.ejs')
+})
 
 app.all('/openfile/:filepath', (req, res) => {
   filepath = req.params["filepath"].replace(/-/g,'/')
@@ -117,9 +123,14 @@ app.get('/document/:id', (req, res) => {
   res.render('./document'+id+'.ejs',{actionURI: actionURI})
 })
 
+app.get('/engineer', (req, res) => {
+  res.render('./engineer.ejs')
+})
+
 app.get('/engineer/:id', (req, res) => {
   id = req.params["id"]
-  res.render('./engineer'+id+'.ejs')
+  actionURI = req.query.actionURI
+  res.render('./engineer'+id+'.ejs',{actionURI: actionURI})
 })
 
 http.listen(port, () => {
