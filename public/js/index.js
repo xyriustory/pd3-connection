@@ -362,7 +362,7 @@ function searchDocument(actionName)
     PREFIX d3: <http://digital-triplet.net/>
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    select ?log ?log_action ?log_action_name ?document ?documentTitle ?documentLink (COUNT(?event) as ?count)
+    select ?documentTitle ?documentLink (COUNT(?event) as ?count)
     where {
       {
         GRAPH <${model}>
@@ -412,7 +412,7 @@ function searchDocument(actionName)
         }
       }
     }
-    group by ?log ?log_action ?log_action_name ?document ?documentTitle ?documentLink
+    group by ?documentTitle ?documentLink
     order by DESC(?count)
     `},
     addSearchedDocumentResult,
@@ -424,18 +424,18 @@ function addSearchedDocumentResult(data) {
   logArray = data["results"]["bindings"]
   $('tbody *').remove();
   logArray.forEach(log => {
-    logName = log["log"]["value"].replace('http://localhost:3030/akiyama/data/','')
-    logActionName = log["log_action_name"]["value"]
-    logActionURI = log["log_action"]["value"]
+    // logName = log["log"]["value"].replace('http://localhost:3030/akiyama/data/','')
+    // logActionName = log["log_action_name"]["value"]
+    // logActionURI = log["log_action"]["value"]
     documentTitle =  log["documentTitle"] ? log["documentTitle"]["value"] : 'ToyotaWiki'
     documentLink =  log["documentLink"] ? log["documentLink"]["value"] : '#'
     count = log["count"] ? log["count"]["value"] : '0'
     $("tbody").append(
       $("<tr></tr>")
-      .append($("<td></td>").append($(`<a href='${documentLink}?actionURI=${logActionURI}'></a>`).text(documentTitle)))
+      .append($("<td></td>").append($(`<a href='${documentLink}'></a>`).text(documentTitle)))
       .append($("<td class='text-center'></td>").text(count))
-      .append($("<td></td>").append($(`<a href='/action?name=${logName}'></a>`).text(logName)))
-      .append($("<td></td>").text(logActionName))
+      // .append($("<td></td>").append($(`<a href='/action?name=${logName}'></a>`).text(logName)))
+      // .append($("<td></td>").text(logActionName))
     );
   })
 }
